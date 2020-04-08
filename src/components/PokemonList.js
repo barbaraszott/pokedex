@@ -8,8 +8,11 @@ function PokemonList() {
   const [pokemonList, setPokemonList] = useState([]);
 
   useEffect(() => {
-    gottaCatchThemAll().then((pokemons) => setPokemonList(pokemons));
-  }, []);
+    gottaCatchThemAll(limit, offset).then(({ pokemons, count }) => {
+      setPokemonList(pokemons);
+      setPokemonCount(count);
+    });
+  }, [offset]);
 
   return (
     <section className="pokemon-list" id="pokemons">
