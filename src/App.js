@@ -9,7 +9,6 @@ function App() {
     <Router>
       <>
         <h1>Pokedex</h1>
-        <Link to="/">List</Link>
         <Route path="/" exact>
           <PokemonList />
         </Route>
