@@ -6,6 +6,12 @@ import { gottaCatchThemAll } from "../api";
 
 function PokemonList() {
   const [pokemonList, setPokemonList] = useState([]);
+  const [pokemonCount, setPokemonCount] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const limit = 5;
+  const offset = currentPage * limit;
+
 
   useEffect(() => {
     gottaCatchThemAll(limit, offset).then(({ pokemons, count }) => {
