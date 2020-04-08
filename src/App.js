@@ -1,35 +1,24 @@
-import React, { Component } from "react";
-import axios from "axios";
+import React from "react";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-class App extends Component {
-  state = {
-    pokemons: [],
-  };
+import PokemonPage from "./components/PokemonPage";
+import PokemonList from "./components/PokemonList";
 
-  catchPokemonData = (pokemon) => {
-    return axios.get(pokemon.url).then((response) => response.data);
-  };
-
-  gottaCatchThemAll = async () => {
-    const pokemonList = await axios.get("https://pokeapi.co/api/v2/pokemon/").then((response) => response.data.results);
-    const promises = pokemonList.map(this.catchPokemonData);
-    const pokemons = await Promise.all(promises);
-
-    this.setState({
-      pokemons,
-    });
-  };
-
-  componentDidMount() {
-    this.gottaCatchThemAll();
-  }
-
-  render() {
-    return (
+function App() {
+  return (
+    <Router>
       <>
+        <h1>Pokedex</h1>
+        <Link to="/">List</Link>
+        <Route path="/" exact>
+          <PokemonList />
+        </Route>
+        <Route path="/pokemon/:name">
+          <PokemonPage />
+        </Route>
       </>
-    );
-  }
+    </Router>
+  );
 }
 
 export default App;
