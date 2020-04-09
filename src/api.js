@@ -48,4 +48,16 @@ export async function gottaCatchThemAll({ limit, offset, type }) {
 
 export function catchPokemonData(name) {
   return axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`).then((response) => response.data);
+export async function getPokemonSpeciesData(speciesName) {
+  const speciesData = await axios
+    .get(`https://pokeapi.co/api/v2/pokemon-species/${speciesName}`)
+    .then((response) => response.data);
+
+  const generation = speciesData.generation ? speciesData.generation.name : null;
+  const color = speciesData.color ? speciesData.color.name : null;
+  const habitat = speciesData.habitat ? speciesData.habitat.name : null;
+  const hasGenderDifferences = speciesData.has_gender_differences || false;
+  const description = speciesData.flavor_text_entries.find((data) => data.language.name === "en").flavor_text;
+
+  return { color, habitat, generation, description, hasGenderDifferences };
 }
