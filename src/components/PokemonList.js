@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import PokemonListItem from "./PokemonListItem";
 import Pagination from "./Pagination";
 import { gottaCatchThemAll } from "../api";
+import Search from "./Search";
 import Spinner from "./Spinner";
 
 function PokemonList() {
@@ -11,6 +12,7 @@ function PokemonList() {
   const [pokemonList, setPokemonList] = useState([]);
   const [pokemonCount, setPokemonCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
+  const [type, setType] = useState(null);
 
   const limit = 5;
   const offset = currentPage * limit;
@@ -26,10 +28,19 @@ function PokemonList() {
       setPokemonCount(count);
     });
   }, [offset]);
+  function onTypeSearch(event) {
+    const type = event.target.value;
+    setType(type === "all" ? null : type);
+    setCurrentPage(0);
+  }
+
 
   return (
     <>
       <p>Pokemon count: {pokemonCount}</p>
+      <section className="pokemon-search">
+        <Search onTypeSearch={onTypeSearch} />
+      </section>
       <section className="pokemon-list" id="pokemons">
         {isLoading ? (
           <Spinner />
