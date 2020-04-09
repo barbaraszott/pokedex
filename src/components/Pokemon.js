@@ -1,14 +1,8 @@
 import React from "react";
 
 function Pokemon(props) {
-  const { name, id, height, sprites, stats, weight } = props;
-  const types = props.types.map((data) => data.type.name);
-  const abilities = props.abilities.map((data) => {
-    return { name: data.ability.name, moreInfo: data.ability.url };
-  });
-  const moves = props.moves.map((data) => {
-    return { name: data.move.name, moreInfo: data.move.url };
-  });
+  const { name, id, height, sprites, stats, weight, abilities, types } = props;
+
   return (
     <>
       <h2>{name}</h2>
@@ -22,7 +16,7 @@ function Pokemon(props) {
         </p>
         <p>Height: {height}</p>
         <p>Weight: {weight}</p>
-        <p>Abilities: {abilities.map((ability) => ability.name).join(", ")}</p>
+        <p>Abilities: {abilities.join(", ")}</p>
       </section>
     </>
   );

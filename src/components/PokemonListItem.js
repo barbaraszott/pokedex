@@ -1,8 +1,8 @@
 import React from "react";
 
 function PokemonListItem(props) {
-  const { name, id, sprites } = props;
-  const types = props.types.map((data) => data.type.name);
+  const { name, id, sprites, types } = props;
+
   return (
     <>
       <h2>{name}</h2>

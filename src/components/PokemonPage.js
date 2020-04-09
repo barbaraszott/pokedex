@@ -6,6 +6,7 @@ import { catchPokemonData } from "../api";
 
 function PokemonPage() {
   const [pokemonData, setPokemonData] = useState(null);
+
   const { name } = useParams();
 
   useEffect(() => {
