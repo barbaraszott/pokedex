@@ -46,8 +46,26 @@ export async function gottaCatchThemAll({ limit, offset, type }) {
   }
 }
 
-export function catchPokemonData(name) {
-  return axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`).then((response) => response.data);
+export async function catchPokemonData(pokemonName) {
+  const allPokemonData = await axios
+    .get(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
+    .then((response) => response.data);
+
+  const { name, id, height, weight, sprites } = allPokemonData;
+  const abilities = allPokemonData.abilities.map((abilityData) => abilityData.ability.name);
+  const moves = allPokemonData.moves.map((moveData) => moveData.move.name);
+  const stats = allPokemonData.stats.map((statData) => {
+    return { name: statData.stat.name, baseStat: statData.base_stat };
+  });
+  const types = allPokemonData.types.map((typeData) => typeData.type.name);
+  const speciesName = allPokemonData.species.name;
+
+  const pokemonData = { name, id, height, weight, types, abilities, stats, moves, sprites };
+  const pokemonSpeciesData = await getPokemonSpeciesData(speciesName);
+
+  return { ...pokemonData, ...pokemonSpeciesData };
+}
+
 export async function getPokemonSpeciesData(speciesName) {
   const speciesData = await axios
     .get(`https://pokeapi.co/api/v2/pokemon-species/${speciesName}`)
