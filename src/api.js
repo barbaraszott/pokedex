@@ -2,6 +2,14 @@ import axios from "axios";
 
 export async function gottaCatchThemAll(limit, offset) {
   const pokeApi = "https://pokeapi.co/api/v2/pokemon/";
+export async function getPokemonTypes() {
+  const pokeApiTypeCall = "https://pokeapi.co/api/v2/type";
+  const typeList = await axios.get(pokeApiTypeCall).then((response) => response.data.results);
+  const types = typeList.map((type) => type.name);
+
+  return types;
+}
+
   const pokeApiCall = `${pokeApi}?limit=${limit}&offset=${offset}`;
   const pokemonList = await axios.get(pokeApiCall).then((response) => {
     return {
