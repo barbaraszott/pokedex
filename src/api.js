@@ -24,6 +24,19 @@ export async function getPokemonTypes() {
   return { pokemons, count };
 }
 
+async function catchWithType({ limit, offset, type }) {
+  const pokemonList = await axios
+    .get(`https://pokeapi.co/api/v2/type/${type}`)
+    .then((response) => response.data.pokemon);
+
+  const promises = pokemonList
+    .slice(offset, offset + limit)
+    .map((pokemonData) => catchPokemonData(pokemonData.pokemon.name));
+  const pokemons = await Promise.all(promises);
+  const count = pokemonList.length;
+
+  return { pokemons, count };
+}
 export function catchPokemonData(name) {
   return axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`).then((response) => response.data);
 }
