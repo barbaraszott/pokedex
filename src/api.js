@@ -76,6 +76,7 @@ export async function getPokemonSpeciesData(speciesName) {
   const habitat = speciesData.habitat ? speciesData.habitat.name : null;
   const hasGenderDifferences = speciesData.has_gender_differences || false;
   const description = speciesData.flavor_text_entries.find((data) => data.language.name === "en").flavor_text;
+  const evolutionChainUrl = speciesData.evolution_chain ? speciesData.evolution_chain.url : null;
 
-  return { color, habitat, generation, description, hasGenderDifferences };
+  return { color, habitat, generation, description, hasGenderDifferences, evolutionChainUrl };
 }
