@@ -4,8 +4,10 @@ import { Link } from "react-router-dom";
 import PokemonListItem from "./PokemonListItem";
 import Pagination from "./Pagination";
 import { gottaCatchThemAll } from "../api";
+import Spinner from "./Spinner";
 
 function PokemonList() {
+  const [isLoading, setLoading] = useState(true);
   const [pokemonList, setPokemonList] = useState([]);
   const [pokemonCount, setPokemonCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
@@ -29,11 +31,15 @@ function PokemonList() {
     <>
       <p>Pokemon count: {pokemonCount}</p>
       <section className="pokemon-list" id="pokemons">
-        {pokemonList.map((data) => (
-          <Link to={`/pokemon/${data.name}`} key={data.id}>
-            <PokemonListItem {...data} />
-          </Link>
-        ))}
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          pokemonList.map((data) => (
+            <Link to={`/pokemon/${data.name}`} key={data.id}>
+              <PokemonListItem {...data} />
+            </Link>
+          ))
+        )}
       </section>
 
       <Pagination currentPage={currentPage} count={pokemonCount} limit={limit} onPageClick={onPageClick} />
