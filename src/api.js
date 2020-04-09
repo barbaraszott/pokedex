@@ -1,7 +1,5 @@
 import axios from "axios";
 
-export async function gottaCatchThemAll(limit, offset) {
-  const pokeApi = "https://pokeapi.co/api/v2/pokemon/";
 export async function getPokemonTypes() {
   const pokeApiTypeCall = "https://pokeapi.co/api/v2/type";
   const typeList = await axios.get(pokeApiTypeCall).then((response) => response.data.results);
@@ -10,6 +8,8 @@ export async function getPokemonTypes() {
   return types;
 }
 
+async function catchAll({ limit, offset }) {
+  const pokeApi = "https://pokeapi.co/api/v2/pokemon";
   const pokeApiCall = `${pokeApi}?limit=${limit}&offset=${offset}`;
   const pokemonList = await axios.get(pokeApiCall).then((response) => {
     return {
@@ -37,6 +37,15 @@ async function catchWithType({ limit, offset, type }) {
 
   return { pokemons, count };
 }
+
+export async function gottaCatchThemAll({ limit, offset, type }) {
+  if (type) {
+    return catchWithType({ limit, offset, type });
+  } else {
+    return catchAll({ limit, offset });
+  }
+}
+
 export function catchPokemonData(name) {
   return axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`).then((response) => response.data);
 }
