@@ -22,18 +22,25 @@ function PokemonList() {
     setCurrentPage(clickedPage);
   }
 
-  useEffect(() => {
-    gottaCatchThemAll(limit, offset).then(({ pokemons, count }) => {
-      setPokemonList(pokemons);
-      setPokemonCount(count);
-    });
-  }, [offset]);
   function onTypeSearch(event) {
     const type = event.target.value;
     setType(type === "all" ? null : type);
     setCurrentPage(0);
   }
 
+  useEffect(
+    () => {
+      if (!isLoading) {
+        setLoading(true);
+      }
+      gottaCatchThemAll({ limit, offset, type }).then(({ pokemons, count }) => {
+        setPokemonList(pokemons);
+        setPokemonCount(count);
+        setLoading(false);
+      });
+    },
+    [offset, type] // eslint-disable-line
+  );
 
   return (
     <>
