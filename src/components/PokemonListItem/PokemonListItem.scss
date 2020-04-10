@@ -1,0 +1,65 @@
+@import "../../tools/colors";
+
+.list-item-container {
+  height: 90%;
+  min-height: 125px;
+  width: 180px;
+  padding: 5px 15px;
+  margin: 5px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: 0.2s;
+  color: rgba(255, 255, 255, 0.9);
+
+  &:hover {
+    transform: scale(1.02);
+  }
+}
+
+.name {
+  margin: 15px 0 0 0;
+  font-size: 1em;
+  text-transform: capitalize;
+  height: 2em;
+}
+
+.id {
+  float: right;
+  opacity: 0.5;
+  display: none;
+}
+
+.info {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: center;
+}
+
+.pokemon-img-container {
+  width: 50%;
+  margin: 0;
+
+  &__img {
+    object-fit: cover;
+    object-position: center;
+  }
+}
+
+.types-container {
+  flex: 1;
+  min-width: 50%;
+  font-size: 0.7em;
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+
+  &__type {
+    text-transform: uppercase;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 15px;
+    margin: 2px;
+    padding: 2px;
+    text-align: center;
+  }
+}
