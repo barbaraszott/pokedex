@@ -3,6 +3,24 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight, faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 
 import "./Pagination.scss";
+
+// function createLink(pageIndex, type = null) {
+//   const specialContent = {
+//     next: <FontAwesomeIcon icon={faChevronRight} />,
+//     previous: <FontAwesomeIcon icon={faChevronLeft} />,
+//   };
+
+//   const content = specialContent[type] || pageIndex + 1;
+//   const classes = type ? `pagination__page pagination__page--${type}` : "pagination__page";
+//   const uniqueKey = type ? `page-${pageIndex}-${type}` : `page-${pageIndex}`;
+
+//   return (
+//     <div key={uniqueKey} className={classes}>
+//       {content}
+//     </div>
+//   );
+// }
+
 function showPageNumber(pageIdx) {
   return pageIdx + 1;
 }
@@ -79,3 +97,45 @@ function createNextLink(nextPageIdx, onPageClick) {
   );
 }
 
+function findFirstPageToShow(currentPage, lastPage, pageNeighboursCount) {
+  if (currentPage - pageNeighboursCount <= 0) {
+    return 0;
+  }
+
+  if (currentPage + pageNeighboursCount >= lastPage) {
+    return lastPage - 2 * pageNeighboursCount;
+  }
+
+  return currentPage - pageNeighboursCount;
+}
+
+function Pagination(props) {
+  const { currentPage, count, limit, onPageClick } = props;
+  const totalPagesCount = Math.ceil(count / limit);
+  const lastPage = totalPagesCount - 1;
+  const pageNeighboursCount = 2;
+  const pagesToShowCount = 2 * pageNeighboursCount + 1;
+  const paginationPagesCount = Math.min(pagesToShowCount, totalPagesCount);
+  const firstShownPageIdx = findFirstPageToShow(currentPage, lastPage, pageNeighboursCount);
+  const previousPageIdx = currentPage - 1;
+  const goPrevious = previousPageIdx >= 0 ? createPreviousLink(previousPageIdx, onPageClick) : null;
+  const nextPageIdx = currentPage + 1;
+  const goNext = nextPageIdx < totalPagesCount ? createNextLink(nextPageIdx, onPageClick) : null;
+  const goToFirst = createPageLinkToStart(0, onPageClick);
+  const goToLast = createPageLinkToEnd(lastPage, onPageClick);
+  const paginationPages = Array.from({ length: paginationPagesCount }, (_, i) =>
+    createPageLink(i + firstShownPageIdx, currentPage, onPageClick)
+  );
+
+  return (
+    <nav className="pagination">
+      {goPrevious}
+      {currentPage > pageNeighboursCount && totalPagesCount > pagesToShowCount && goToFirst}
+      {paginationPages}
+      {currentPage < totalPagesCount - 2 && totalPagesCount > pagesToShowCount && goToLast}
+      {goNext}
+    </nav>
+  );
+}
+
+export default Pagination;
