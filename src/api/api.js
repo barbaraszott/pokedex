@@ -51,7 +51,7 @@ export async function catchPokemonData(pokemonName) {
     .get(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
     .then((response) => response.data);
 
-  const { name, id, height, weight, sprites } = allPokemonData;
+  const { id, height, weight, sprites, name } = allPokemonData;
   const abilities = allPokemonData.abilities.map((abilityData) => abilityData.ability.name);
   const moves = allPokemonData.moves.map((moveData) => moveData.move.name);
   const stats = allPokemonData.stats.map((statData) => {
@@ -65,6 +65,11 @@ export async function catchPokemonData(pokemonName) {
 
   return { ...pokemonData, ...pokemonSpeciesData };
 }
+
+// export async function getEvolutionChain(evolutionChainUrl, speciesName) {
+//   const evolutionData = await axios.get(evolutionChainUrl).then(response => response.data.chain);
+
+// }
 
 export async function getPokemonSpeciesData(speciesName) {
   const speciesData = await axios
