@@ -1,21 +1,22 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
-import PokemonPage from "./components/PokemonPage";
-import PokemonList from "./components/PokemonList";
+import PokemonPage from "../PokemonPage/PokemonPage";
+import PokemonList from "../PokemonList/PokemonList";
+
+import "./App.scss";
 
 function App() {
   return (
     <Router>
-      <>
-        <h1>Pokedex</h1>
+      <main className="content">
         <Route path="/" exact>
           <PokemonList />
         </Route>
         <Route path="/pokemon/:name">
           <PokemonPage />
         </Route>
-      </>
+      </main>
     </Router>
   );
 }
