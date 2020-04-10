@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-import PokemonListItem from "./PokemonListItem";
-import Pagination from "./Pagination";
-import { gottaCatchThemAll } from "../api";
-import Search from "./Search";
-import Spinner from "./Spinner";
+import "./PokemonList.scss";
+
+import PokemonListItem from "../PokemonListItem/PokemonListItem";
+import Pagination from "../Pagination/Pagination";
+import { gottaCatchThemAll } from "../../api/api";
+import Search from "../Search";
+import Spinner from "../../tools/Spinner";
 
 function PokemonList() {
   const [isLoading, setLoading] = useState(true);
@@ -14,13 +16,9 @@ function PokemonList() {
   const [currentPage, setCurrentPage] = useState(0);
   const [type, setType] = useState(null);
 
-  const limit = 5;
+  const limit = 20;
   const offset = currentPage * limit;
 
-  function onPageClick(event) {
-    const clickedPage = +event.target.dataset.page;
-    setCurrentPage(clickedPage);
-  }
 
   function onTypeSearch(event) {
     const type = event.target.value;
@@ -43,8 +41,10 @@ function PokemonList() {
   );
 
   return (
-    <>
-      <p>Pokemon count: {pokemonCount}</p>
+    <section className="pokedex">
+      <header>
+        <h1>Pokedex</h1>
+      </header>
       <section className="pokemon-search">
         <Search onTypeSearch={onTypeSearch} />
       </section>
@@ -61,7 +61,7 @@ function PokemonList() {
       </section>
 
       <Pagination currentPage={currentPage} count={pokemonCount} limit={limit} onPageClick={onPageClick} />
-    </>
+    </section>
   );
 }
 
