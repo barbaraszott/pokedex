@@ -1,0 +1,19 @@
+@import "../../tools/colors.scss";
+
+.pokedex {
+  padding: 20px;
+  border-radius: 20px;
+  background-color: $pokedex-background-color;
+  box-shadow: 0px 19px 16px 6px $pokedex-shadow-color;
+}
+
+.pokemon-list {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+
+  // Links from Router
+  & a {
+    text-decoration: none;
+  }
+}
