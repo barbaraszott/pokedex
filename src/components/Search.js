@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { getPokemonTypes } from "../api";
+import { getPokemonTypes } from "../api/api";
 
 function Search(props) {
   const { onTypeSearch } = props;
