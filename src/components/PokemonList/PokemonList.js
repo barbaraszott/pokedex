@@ -19,6 +19,9 @@ function PokemonList() {
   const limit = 20;
   const offset = currentPage * limit;
 
+  function onPageClick(page) {
+    setCurrentPage(page);
+  }
 
   function onTypeSearch(event) {
     const type = event.target.value;
