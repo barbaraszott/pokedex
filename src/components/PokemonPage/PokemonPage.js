@@ -21,11 +21,11 @@ function PokemonPage() {
   }, [name]);
 
   return (
-    <section className="pokemon-page" style={{ backgroundColor: pokemonColor }}>
+    <section className="pokemon-page">
       <Link to="/" className="back-arrow">
         &#129104;
       </Link>
-      {pokemonData ? <Pokemon {...pokemonData} /> : "Loading"}
+      {pokemonData ? <Pokemon {...pokemonData} backgroundColor={pokemonColor} /> : "Loading"}
     </section>
   );
 }
