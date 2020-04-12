@@ -4,23 +4,6 @@ import { faChevronLeft, faChevronRight, faEllipsisH } from "@fortawesome/free-so
 
 import "./Pagination.scss";
 
-// function createLink(pageIndex, type = null) {
-//   const specialContent = {
-//     next: <FontAwesomeIcon icon={faChevronRight} />,
-//     previous: <FontAwesomeIcon icon={faChevronLeft} />,
-//   };
-
-//   const content = specialContent[type] || pageIndex + 1;
-//   const classes = type ? `pagination__page pagination__page--${type}` : "pagination__page";
-//   const uniqueKey = type ? `page-${pageIndex}-${type}` : `page-${pageIndex}`;
-
-//   return (
-//     <div key={uniqueKey} className={classes}>
-//       {content}
-//     </div>
-//   );
-// }
-
 function showPageNumber(pageIdx) {
   return pageIdx + 1;
 }
