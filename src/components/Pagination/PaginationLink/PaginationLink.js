@@ -9,6 +9,11 @@ function PaginationLink(props) {
   const { pageIndex, currentPageIndex, onPageClick, isLinkToStart, isLinkToEnd, isPrevious, isNext } = props;
   const isCurrentPage = pageIndex === currentPageIndex;
   const pageNumber = pageIndex + 1;
+  const createArrow = (isNext, isPrevious) => {
+    if (isPrevious) return <FontAwesomeIcon icon={faChevronLeft} />;
+    if (isNext) return <FontAwesomeIcon icon={faChevronRight} />;
+  };
+  const content = isNext || isPrevious ? createArrow(isNext, isPrevious) : pageNumber;
 
   const classes = classNames("pagination__link", {
     "pagination__link--current": isCurrentPage,
