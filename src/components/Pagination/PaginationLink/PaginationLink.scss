@@ -47,4 +47,39 @@
     background-color: $pagination-current-bcg;
   }
 
+  &--start,
+  &--end {
+    position: relative;
+
+    &::after {
+      content: "...";
+      pointer-events: none;
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      color: $pagination-arrow-bcg;
+      opacity: 0.3;
+      font-weight: bold;
+      font-size: 30px;
+      top: -5px;
+    }
+  }
+
+  &--start {
+    margin-right: 48px;
+
+    &::after {
+      left: 100%;
+    }
+  }
+
+  &--end {
+    margin-left: 48px;
+
+    &::after {
+      right: 100%;
+    }
+  }
 }
