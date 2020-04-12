@@ -1,3 +1,10 @@
+@import "../../tools/colors.scss";
+
+.pokemon__header {
+  padding: 20px;
+  border-radius: 20px;
+}
+
 .pokemon-page__types-container {
   font-size: 0.8em;
   font-weight: bold;
@@ -24,6 +31,7 @@
   color: #fff;
   opacity: 0.5;
   float: right;
+  max-height: 85vh;
 }
 
 .pokemon-page__img-container {
@@ -31,4 +39,35 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+.pokemon-info {
+  &__content {
+    padding: 20px;
+    background-color: inherit;
+    border-radius: 20px;
+    position: relative;
+    top: -50px;
+  }
+
+  &__navigation {
+    display: flex;
+    justify-content: space-evenly;
+    border-bottom: 2px solid #f8f8f8;
+
+    &__link {
+      padding: 10px 5px;
+      text-decoration: none;
+      font-size: 0.8em;
+      font-weight: bold;
+      color: $navigation-color;
+
+      &--selected {
+        color: $navigation-color-selected;
+        box-shadow: 0 2px 0px 0px $navigation-selected-underline;
+      }
+    }
+  }
 }
