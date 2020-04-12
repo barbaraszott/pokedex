@@ -18,23 +18,33 @@
   &--next {
     background-color: $pagination-arrow-bcg;
     color: $pagination-arrow;
+    position: relative;
+
+    &::before {
+      font-weight: bold;
+      font-size: 14px;
+    }
   }
 
   &--previous {
     margin-right: 30px;
+
+    &::before {
+      content: "PREV";
+    }
   }
 
   &--next {
     margin-left: 30px;
+
+    &::before {
+      content: "NEXT";
+    }
   }
 
   &--current {
     color: $pagination-current;
     background-color: $pagination-current-bcg;
   }
-}
 
-.dots {
-  color: $pagination-arrow-bcg;
-  opacity: 0.3;
 }
