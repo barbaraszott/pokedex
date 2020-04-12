@@ -23,6 +23,15 @@ function PaginationLink(props) {
     "pagination__link--next": isNext,
   });
 
+  return (
+    <>
+      {isLinkToEnd && <FontAwesomeIcon icon={faEllipsisH} className="dots" />}
+      <div data-page={pageIndex} className={classes} onClick={() => onPageClick(pageIndex)}>
+        {content}
+      </div>
+      {isLinkToStart && <FontAwesomeIcon icon={faEllipsisH} className="dots" />}
+    </>
+  );
 }
 
 export default PaginationLink;
