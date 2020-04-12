@@ -1,84 +1,8 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronLeft, faChevronRight, faEllipsisH } from "@fortawesome/free-solid-svg-icons";
+
+import PaginationLink from "./PaginationLink/PaginationLink";
 
 import "./Pagination.scss";
-
-function showPageNumber(pageIdx) {
-  return pageIdx + 1;
-}
-
-function createPageLink(page, currentPage, onPageClick) {
-  const isCurrentPage = page === currentPage;
-  return (
-    <div
-      key={`page-${page}`}
-      data-page={page}
-      className={`pagination__link${isCurrentPage ? " pagination__link--current" : ""}`}
-      onClick={() => onPageClick(page)}
-    >
-      {showPageNumber(page)}
-    </div>
-  );
-}
-
-function createPageLinkToStart(page, onPageClick) {
-  return (
-    <>
-      <div
-        key={`page-${page}--start`}
-        data-page={page}
-        className="pagination__link pagination__link--start"
-        onClick={() => onPageClick(page)}
-      >
-        {showPageNumber(page)}
-      </div>
-      <FontAwesomeIcon icon={faEllipsisH} className="dots" />
-    </>
-  );
-}
-
-function createPageLinkToEnd(page, onPageClick) {
-  return (
-    <>
-      <FontAwesomeIcon icon={faEllipsisH} className="dots" />
-      <div
-        key={`page-${page}--end`}
-        data-page={page}
-        className="pagination__link pagination__link--end"
-        onClick={() => onPageClick(page)}
-      >
-        {showPageNumber(page)}
-      </div>
-    </>
-  );
-}
-
-function createPreviousLink(previousPageIdx, onPageClick) {
-  return (
-    <div
-      key={`page-${previousPageIdx}`}
-      data-page={previousPageIdx}
-      className="pagination__link pagination__link--previous"
-      onClick={() => onPageClick(previousPageIdx)}
-    >
-      <FontAwesomeIcon icon={faChevronLeft} />
-    </div>
-  );
-}
-
-function createNextLink(nextPageIdx, onPageClick) {
-  return (
-    <div
-      key={`page-${nextPageIdx}`}
-      data-page={nextPageIdx}
-      className="pagination__link pagination__link--next"
-      onClick={() => onPageClick(nextPageIdx)}
-    >
-      <FontAwesomeIcon icon={faChevronRight} />
-    </div>
-  );
-}
 
 function findFirstPageToShow(currentPage, lastPage, pageNeighboursCount) {
   if (currentPage - pageNeighboursCount <= 0) {
@@ -101,14 +25,28 @@ function Pagination(props) {
   const paginationPagesCount = Math.min(pagesToShowCount, totalPagesCount);
   const firstShownPageIdx = findFirstPageToShow(currentPage, lastPage, pageNeighboursCount);
   const previousPageIdx = currentPage - 1;
-  const goPrevious = previousPageIdx >= 0 ? createPreviousLink(previousPageIdx, onPageClick) : null;
+  const goPrevious =
+    previousPageIdx >= 0 ? (
+      <PaginationLink onPageClick={onPageClick} pageIndex={previousPageIdx} isPrevious={true} />
+    ) : null;
   const nextPageIdx = currentPage + 1;
-  const goNext = nextPageIdx < totalPagesCount ? createNextLink(nextPageIdx, onPageClick) : null;
-  const goToFirst = createPageLinkToStart(0, onPageClick);
-  const goToLast = createPageLinkToEnd(lastPage, onPageClick);
-  const paginationPages = Array.from({ length: paginationPagesCount }, (_, i) =>
-    createPageLink(i + firstShownPageIdx, currentPage, onPageClick)
-  );
+  const goNext =
+    nextPageIdx < totalPagesCount ? (
+      <PaginationLink onPageClick={onPageClick} pageIndex={nextPageIdx} isNext={true} />
+    ) : null;
+  const goToFirst = <PaginationLink onPageClick={onPageClick} pageIndex={0} isLinkToStart={true} />;
+  const goToLast = <PaginationLink onPageClick={onPageClick} pageIndex={lastPage} isLinkToEnd={true} />;
+  const paginationPages = Array.from({ length: paginationPagesCount }, (_, i) => {
+    const pageIndex = i + firstShownPageIdx;
+    return (
+      <PaginationLink
+        onPageClick={onPageClick}
+        pageIndex={pageIndex}
+        currentPageIndex={currentPage}
+        key={`page-${pageIndex}`}
+      />
+    );
+  });
 
   return (
     <nav className="pagination">
