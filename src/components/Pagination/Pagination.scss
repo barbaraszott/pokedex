@@ -1,46 +1,5 @@
-@import "../../tools/colors";
-
 .pagination {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.pagination__link {
-  color: #000;
-  cursor: pointer;
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 5px;
-
-  &:hover {
-    background-color: $pagination-hover;
-  }
-
-  &--previous,
-  &--next {
-    background-color: $pagination-arrow-bcg;
-    color: $pagination-arrow;
-  }
-
-  &--previous {
-    margin-right: 30px;
-  }
-
-  &--next {
-    margin-left: 30px;
-  }
-
-  &--current {
-    color: $pagination-current;
-    background-color: $pagination-current-bcg;
-  }
-}
-
-.dots {
-  color: $pagination-arrow-bcg;
-  opacity: 0.3;
 }
