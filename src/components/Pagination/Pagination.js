@@ -14,7 +14,7 @@ function createPageLink(page, currentPage, onPageClick) {
     <div
       key={`page-${page}`}
       data-page={page}
-      className={`pagination__page${isCurrentPage ? " pagination__page--current" : ""}`}
+      className={`pagination__link${isCurrentPage ? " pagination__link--current" : ""}`}
       onClick={() => onPageClick(page)}
     >
       {showPageNumber(page)}
@@ -28,7 +28,7 @@ function createPageLinkToStart(page, onPageClick) {
       <div
         key={`page-${page}--start`}
         data-page={page}
-        className="pagination__page pagination__page--start"
+        className="pagination__link pagination__link--start"
         onClick={() => onPageClick(page)}
       >
         {showPageNumber(page)}
@@ -45,7 +45,7 @@ function createPageLinkToEnd(page, onPageClick) {
       <div
         key={`page-${page}--end`}
         data-page={page}
-        className="pagination__page pagination__page--end"
+        className="pagination__link pagination__link--end"
         onClick={() => onPageClick(page)}
       >
         {showPageNumber(page)}
@@ -59,7 +59,7 @@ function createPreviousLink(previousPageIdx, onPageClick) {
     <div
       key={`page-${previousPageIdx}`}
       data-page={previousPageIdx}
-      className="pagination__page pagination__page--previous"
+      className="pagination__link pagination__link--previous"
       onClick={() => onPageClick(previousPageIdx)}
     >
       <FontAwesomeIcon icon={faChevronLeft} />
@@ -72,7 +72,7 @@ function createNextLink(nextPageIdx, onPageClick) {
     <div
       key={`page-${nextPageIdx}`}
       data-page={nextPageIdx}
-      className="pagination__page pagination__page--next"
+      className="pagination__link pagination__link--next"
       onClick={() => onPageClick(nextPageIdx)}
     >
       <FontAwesomeIcon icon={faChevronRight} />
