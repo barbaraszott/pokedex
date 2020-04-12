@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, NavLink, useRouteMatch } from "react-router-dom";
+import { Route, Switch, NavLink, useRouteMatch, Redirect } from "react-router-dom";
 
 import PokemonAbout from "../PokemonAbout/PokemonAbout";
 import PokemonEvolution from "../PokemonEvolution/PokemonEvolution";
@@ -35,23 +35,50 @@ function Pokemon(props) {
       </section>
       <main className="pokemon-info__content">
         <nav className="pokemon-info__navigation">
-          <NavLink to={`${routeMatch.url}`}>About</NavLink>
-          <NavLink to={`${routeMatch.url}/stats`}>BaseStats</NavLink>
-          <NavLink to={`${routeMatch.url}/evolution`}>Evolution</NavLink>
-          <NavLink to={`${routeMatch.url}/moves`}>Moves</NavLink>
+          <NavLink
+            to={`${routeMatch.url}/about`}
+            className="pokemon-info__navigation__link"
+            activeClassName="pokemon-info__navigation__link--selected"
+          >
+            About
+          </NavLink>
+          <NavLink
+            to={`${routeMatch.url}/stats`}
+            className="pokemon-info__navigation__link"
+            activeClassName="pokemon-info__navigation__link--selected"
+          >
+            Base Stats
+          </NavLink>
+          <NavLink
+            to={`${routeMatch.url}/evolution`}
+            className="pokemon-info__navigation__link"
+            activeClassName="pokemon-info__navigation__link--selected"
+          >
+            Evolution
+          </NavLink>
+          <NavLink
+            to={`${routeMatch.url}/moves`}
+            className="pokemon-info__navigation__link"
+            activeClassName="pokemon-info__navigation__link--selected"
+          >
+            Moves
+          </NavLink>
         </nav>
-        <Route path={`${routeMatch.url}`} exact>
-          <PokemonAbout />
-        </Route>
-        <Route path={`${routeMatch.url}/stats`}>
-          <PokemonStats />
-        </Route>
-        <Route path={`${routeMatch.url}/evolution`}>
-          <PokemonEvolution />
-        </Route>
-        <Route path={`${routeMatch.url}/moves`}>
-          <PokemonMoves />
-        </Route>
+        <Switch>
+          <Route path={`${routeMatch.url}/about`}>
+            <PokemonAbout />
+          </Route>
+          <Route path={`${routeMatch.url}/stats`}>
+            <PokemonStats />
+          </Route>
+          <Route path={`${routeMatch.url}/evolution`}>
+            <PokemonEvolution />
+          </Route>
+          <Route path={`${routeMatch.url}/moves`}>
+            <PokemonMoves />
+          </Route>
+          <Redirect to={`${routeMatch.url}/about`} />
+        </Switch>
       </main>
     </>
   );
