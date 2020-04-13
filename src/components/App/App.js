@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import PokemonPage from "../PokemonPage/PokemonPage";
 import PokemonList from "../PokemonList/PokemonList";
 
+import { gottaCatchThemAll } from "../../api/api";
 import "./App.scss";
 
 function App() {
@@ -11,7 +12,7 @@ function App() {
     <Router>
       <main className="content">
         <Route path="/" exact>
-          <PokemonList />
+          <PokemonList gottaCatchThemAll={gottaCatchThemAll} />
         </Route>
         <Route path="/pokemon/:name">
           <PokemonPage />

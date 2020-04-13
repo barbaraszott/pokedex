@@ -5,11 +5,10 @@ import "./PokemonList.scss";
 
 import PokemonListItem from "../PokemonListItem/PokemonListItem";
 import Pagination from "../Pagination/Pagination";
-import { gottaCatchThemAll } from "../../api/api";
 import Search from "../Search";
 import Spinner from "../../tools/Spinner";
 
-function PokemonList() {
+function PokemonList(props) {
   const [isLoading, setLoading] = useState(true);
   const [pokemonList, setPokemonList] = useState([]);
   const [pokemonCount, setPokemonCount] = useState(0);
@@ -34,7 +33,7 @@ function PokemonList() {
       if (!isLoading) {
         setLoading(true);
       }
-      gottaCatchThemAll({ limit, offset, type }).then(({ pokemons, count }) => {
+      props.gottaCatchThemAll({ limit, offset, type }).then(({ pokemons, count }) => {
         setPokemonList(pokemons);
         setPokemonCount(count);
         setLoading(false);
