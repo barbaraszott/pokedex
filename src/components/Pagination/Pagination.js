@@ -53,7 +53,7 @@ function Pagination(props) {
       {goPrevious}
       {currentPageIndex > pageNeighboursCount && totalPagesCount > pagesToShowCount && goToFirst}
       {paginationPages}
-      {currentPageIndex < totalPagesCount - 2 && totalPagesCount > pagesToShowCount && goToLast}
+      {currentPageIndex < totalPagesCount - pageNeighboursCount - 1 && totalPagesCount > pagesToShowCount && goToLast}
       {goNext}
     </nav>
   );
