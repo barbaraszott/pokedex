@@ -4,26 +4,35 @@ import PaginationLink from "./PaginationLink/PaginationLink";
 
 import "./Pagination.scss";
 
-function findFirstPageToShow(currentPage, lastPage, pageNeighboursCount) {
-  if (currentPage - pageNeighboursCount <= 0) {
+function findFirstPaginationLinkIndex(currentPageIndex, lastPageIndex, pageNeighboursCount) {
+  const isNotEnoughPagesToShow = lastPageIndex <= 2 * pageNeighboursCount;
+  const isNotEnoughLeftNeighbours = currentPageIndex - pageNeighboursCount <= 0;
+  const isNotEnoughRightNeighbours = currentPageIndex + pageNeighboursCount >= lastPageIndex;
+
+  if (isNotEnoughPagesToShow || isNotEnoughLeftNeighbours) {
     return 0;
   }
 
-  if (currentPage + pageNeighboursCount >= lastPage) {
-    return lastPage - 2 * pageNeighboursCount;
+  if (isNotEnoughRightNeighbours) {
+    return lastPageIndex - 2 * pageNeighboursCount;
   }
 
-  return currentPage - pageNeighboursCount;
+  return currentPageIndex - pageNeighboursCount;
 }
 
 function Pagination(props) {
   const { currentPageIndex, count, limit, onPageClick } = props;
   const totalPagesCount = Math.ceil(count / limit);
-  const lastPage = totalPagesCount - 1;
+  const lastPageIndex = totalPagesCount - 1;
   const pageNeighboursCount = 2;
   const pagesToShowCount = 2 * pageNeighboursCount + 1;
   const paginationPagesCount = Math.min(pagesToShowCount, totalPagesCount);
-  const firstShownPageIdx = findFirstPageToShow(currentPageIndex, lastPage, pageNeighboursCount);
+  const firstShownPageIndex = findFirstPaginationLinkIndex(
+    currentPageIndex,
+    lastPageIndex,
+    pageNeighboursCount,
+    totalPagesCount
+  );
   const previousPageIdx = currentPageIndex - 1;
   const goPrevious =
     previousPageIdx >= 0 ? (
@@ -35,9 +44,9 @@ function Pagination(props) {
       <PaginationLink onPageClick={onPageClick} pageIndex={nextPageIdx} isNext={true} />
     ) : null;
   const goToFirst = <PaginationLink onPageClick={onPageClick} pageIndex={0} isLinkToStart={true} />;
-  const goToLast = <PaginationLink onPageClick={onPageClick} pageIndex={lastPage} isLinkToEnd={true} />;
+  const goToLast = <PaginationLink onPageClick={onPageClick} pageIndex={lastPageIndex} isLinkToEnd={true} />;
   const paginationPages = Array.from({ length: paginationPagesCount }, (_, i) => {
-    const pageIndex = i + firstShownPageIdx;
+    const pageIndex = i + firstShownPageIndex;
     return (
       <PaginationLink
         onPageClick={onPageClick}
@@ -51,9 +60,11 @@ function Pagination(props) {
   return (
     <nav className="pagination">
       {goPrevious}
-      {currentPageIndex > pageNeighboursCount && totalPagesCount > pagesToShowCount && goToFirst}
+      {currentPageIndex > pageNeighboursCount && totalPagesCount > paginationPagesCount && goToFirst}
       {paginationPages}
-      {currentPageIndex < totalPagesCount - pageNeighboursCount - 1 && totalPagesCount > pagesToShowCount && goToLast}
+      {currentPageIndex < totalPagesCount - pageNeighboursCount - 1 &&
+        totalPagesCount > paginationPagesCount &&
+        goToLast}
       {goNext}
     </nav>
   );
