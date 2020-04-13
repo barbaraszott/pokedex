@@ -64,7 +64,7 @@ function PokemonList() {
       </section>
 
       {!isLoading && (
-        <Pagination currentPage={currentPage} count={pokemonCount} limit={limit} onPageClick={onPageClick} />
+        <Pagination currentPageIndex={currentPage} count={pokemonCount} limit={limit} onPageClick={onPageClick} />
       )}
     </section>
   );

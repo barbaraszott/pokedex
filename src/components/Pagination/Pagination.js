@@ -17,19 +17,19 @@ function findFirstPageToShow(currentPage, lastPage, pageNeighboursCount) {
 }
 
 function Pagination(props) {
-  const { currentPage, count, limit, onPageClick } = props;
+  const { currentPageIndex, count, limit, onPageClick } = props;
   const totalPagesCount = Math.ceil(count / limit);
   const lastPage = totalPagesCount - 1;
   const pageNeighboursCount = 2;
   const pagesToShowCount = 2 * pageNeighboursCount + 1;
   const paginationPagesCount = Math.min(pagesToShowCount, totalPagesCount);
-  const firstShownPageIdx = findFirstPageToShow(currentPage, lastPage, pageNeighboursCount);
-  const previousPageIdx = currentPage - 1;
+  const firstShownPageIdx = findFirstPageToShow(currentPageIndex, lastPage, pageNeighboursCount);
+  const previousPageIdx = currentPageIndex - 1;
   const goPrevious =
     previousPageIdx >= 0 ? (
       <PaginationLink onPageClick={onPageClick} pageIndex={previousPageIdx} isPrevious={true} />
     ) : null;
-  const nextPageIdx = currentPage + 1;
+  const nextPageIdx = currentPageIndex + 1;
   const goNext =
     nextPageIdx < totalPagesCount ? (
       <PaginationLink onPageClick={onPageClick} pageIndex={nextPageIdx} isNext={true} />
@@ -42,7 +42,7 @@ function Pagination(props) {
       <PaginationLink
         onPageClick={onPageClick}
         pageIndex={pageIndex}
-        currentPageIndex={currentPage}
+        currentPageIndex={currentPageIndex}
         key={`page-${pageIndex}`}
       />
     );
@@ -51,9 +51,9 @@ function Pagination(props) {
   return (
     <nav className="pagination">
       {goPrevious}
-      {currentPage > pageNeighboursCount && totalPagesCount > pagesToShowCount && goToFirst}
+      {currentPageIndex > pageNeighboursCount && totalPagesCount > pagesToShowCount && goToFirst}
       {paginationPages}
-      {currentPage < totalPagesCount - 2 && totalPagesCount > pagesToShowCount && goToLast}
+      {currentPageIndex < totalPagesCount - 2 && totalPagesCount > pagesToShowCount && goToLast}
       {goNext}
     </nav>
   );
