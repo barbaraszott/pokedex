@@ -9,6 +9,9 @@
   align-items: center;
   justify-content: center;
   border-radius: 5px;
+  font-family: inherit;
+  border: none;
+  background-color: #fff;
 
   &:hover {
     background-color: $pagination-hover;
@@ -45,6 +48,7 @@
   &--current {
     color: $pagination-current;
     background-color: $pagination-current-bcg;
+    font-weight: bold;
   }
 
   &--start,

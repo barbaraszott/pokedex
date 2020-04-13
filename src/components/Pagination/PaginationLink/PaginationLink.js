@@ -18,9 +18,9 @@ function PaginationLink(props) {
   });
 
   return (
-    <div data-page={pageIndex} className={classes} onClick={() => onPageClick(pageIndex)}>
+    <button data-page={pageIndex} className={classes} role="button" onClick={() => onPageClick(pageIndex)}>
       {content}
-    </div>
+    </button>
   );
 }
 
