@@ -51,15 +51,15 @@ function PokemonList(props) {
         <Search onTypeSearch={onTypeSearch} />
       </section>
       <section className="pokemon-list" id="pokemons">
-        {isLoading ? (
-          <Spinner />
-        ) : (
+        {isLoading && <Spinner />}
+        {!isLoading && pokemonList.length === 0 && <span>No pokemons :(</span>}
+        {!isLoading &&
+          pokemonList.length > 0 &&
           pokemonList.map((data) => (
-            <Link to={`/pokemon/${data.name}`} key={data.id}>
+            <Link to={`/pokemon/${data.name}`} key={data.id} data-testid="pokemon-list-item">
               <PokemonListItem {...data} />
             </Link>
-          ))
-        )}
+          ))}
       </section>
 
       {!isLoading && (
