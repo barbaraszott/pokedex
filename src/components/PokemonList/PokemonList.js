@@ -18,9 +18,6 @@ function PokemonList(props) {
   const limit = 20;
   const offset = currentPage * limit;
 
-  function onPageClick(page) {
-    setCurrentPage(page);
-  }
   const onTypeSearch = useCallback((event) => {
     const type = event.target.value;
     setType(type === "all" ? null : type);
@@ -62,7 +59,7 @@ function PokemonList(props) {
       </section>
 
       {!isLoading && (
-        <Pagination currentPageIndex={currentPage} count={pokemonCount} limit={limit} onPageClick={onPageClick} />
+        <Pagination currentPageIndex={currentPage} count={pokemonCount} limit={limit} onPageClick={setCurrentPage} />
       )}
     </section>
   );
