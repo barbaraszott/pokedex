@@ -10,15 +10,35 @@ import * as noPic from "../../tools/no-picture.png";
 import "./Pokemon.scss";
 
 function Pokemon(props) {
-  const { name, id, height, sprites, stats, weight, abilities, types, backgroundColor } = props;
+  const {
+    name,
+    id,
+    height,
+    weight,
+    types,
+    abilities,
+    stats,
+    moves,
+    sprites,
+    color,
+    habitat,
+    generation,
+    description,
+    hasGenderDifferences,
+    evolutionChainUrl,
+    pokemonColor,
+    species
+  } = props;
 
   const pokemonPicture = sprites.front_default ? sprites.front_default : noPic;
+
+  const aboutProps = {description, species, height, weight, abilities, habitat, generation};
 
   let routeMatch = useRouteMatch();
 
   return (
     <>
-      <section className="pokemon__header" style={{ backgroundColor }}>
+      <section className="pokemon__header" style={{ backgroundColor : pokemonColor }}>
         <h1 className="pokemon-page__name">
           {name} <span className="pokemon-page__id">#{id}</span>
         </h1>
@@ -66,7 +86,7 @@ function Pokemon(props) {
         </nav>
         <Switch>
           <Route path={`${routeMatch.url}/about`}>
-            <PokemonAbout />
+            <PokemonAbout {...aboutProps}/>
           </Route>
           <Route path={`${routeMatch.url}/stats`}>
             <PokemonStats />
