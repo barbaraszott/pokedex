@@ -8,7 +8,7 @@ function PokemonAbout(props) {
     species: props.species,
     height: props.height,
     weight: props.weight,
-    abilities: props.abilities.join(", "),
+    abilities: props.abilities.join(", ").replace(/-/g, " "),
     habitat: props.habitat,
     generation: props.generation.replace(/generation-/i, "").toUpperCase(),
   };

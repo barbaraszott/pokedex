@@ -12,7 +12,7 @@ function PokemonMoves(props) {
       <ul className="pokemon-moves-list">
         {moves.map((move) => (
           <li className="pokemon-moves-list__item" key={`pokemon-moves-${move}`}>
-            {move.replace("-", " ")}
+            {move.replace(/-/g, " ")}
           </li>
         ))}
       </ul>
