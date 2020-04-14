@@ -77,11 +77,12 @@ export async function getPokemonSpeciesData(speciesName) {
     .then((response) => response.data);
 
   const generation = speciesData.generation ? speciesData.generation.name : null;
+  const species = speciesData.genera.find((data) => data.language.name === "en").genus;
   const color = speciesData.color ? speciesData.color.name : null;
   const habitat = speciesData.habitat ? speciesData.habitat.name : null;
   const hasGenderDifferences = speciesData.has_gender_differences || false;
   const description = speciesData.flavor_text_entries.find((data) => data.language.name === "en").flavor_text;
   const evolutionChainUrl = speciesData.evolution_chain ? speciesData.evolution_chain.url : null;
 
-  return { color, habitat, generation, description, hasGenderDifferences, evolutionChainUrl };
+  return { species, color, habitat, generation, description, hasGenderDifferences, evolutionChainUrl };
 }
