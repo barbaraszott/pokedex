@@ -1,0 +1,29 @@
+@import "../../tools/colors.scss";
+
+.pokemon-stats__info {
+  display: flex;
+  text-transform: capitalize;
+  align-items: center;
+  padding: 10px 0;
+
+  &__category {
+    flex: 0 1 105px;
+    font-weight: bold;
+    color: $navigation-color;
+  }
+
+  &__stat {
+    text-align: center;
+    flex: 0 0 40px;
+  }
+
+  &__stat-bar {
+    flex: 1 1 auto;
+    background-color: $navigation-underline;
+    height: 3px;
+
+    &--progress {
+      height: 100%;
+    }
+  }
+}
