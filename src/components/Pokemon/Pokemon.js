@@ -27,18 +27,18 @@ function Pokemon(props) {
     hasGenderDifferences,
     evolutionChainUrl,
     pokemonColor,
-    species
+    species,
   } = props;
 
   const pokemonPicture = sprites.front_default ? sprites.front_default : noPic;
 
-  const aboutProps = {description, species, height, weight, abilities, habitat, generation};
+  const aboutProps = { description, species, height, weight, abilities, habitat, generation };
 
   let routeMatch = useRouteMatch();
 
   return (
     <>
-      <section className="pokemon__header" style={{ backgroundColor : pokemonColor }}>
+      <section className="pokemon__header" style={{ backgroundColor: pokemonColor }}>
         <h1 className="pokemon-page__name">
           {name} <span className="pokemon-page__id">#{id}</span>
         </h1>
@@ -86,10 +86,10 @@ function Pokemon(props) {
         </nav>
         <Switch>
           <Route path={`${routeMatch.url}/about`}>
-            <PokemonAbout {...aboutProps}/>
+            <PokemonAbout {...aboutProps} />
           </Route>
           <Route path={`${routeMatch.url}/stats`}>
-            <PokemonStats />
+            <PokemonStats stats={stats} />
           </Route>
           <Route path={`${routeMatch.url}/evolution`}>
             <PokemonEvolution />
