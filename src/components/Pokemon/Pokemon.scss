@@ -3,6 +3,7 @@
 .pokemon__header {
   padding: 20px;
   border-radius: 20px;
+  margin-bottom: -50px;
 }
 
 .pokemon-page__types-container {
@@ -48,8 +49,6 @@
     padding: 20px;
     background-color: inherit;
     border-radius: 20px;
-    position: relative;
-    top: -50px;
   }
 
   &__navigation {
