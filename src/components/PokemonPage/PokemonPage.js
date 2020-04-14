@@ -25,7 +25,7 @@ function PokemonPage() {
       <Link to="/" className="back-arrow">
         &#129104;
       </Link>
-      {pokemonData ? <Pokemon {...pokemonData} backgroundColor={pokemonColor} /> : "Loading"}
+      {pokemonData ? <Pokemon {...pokemonData} pokemonColor={pokemonColor} /> : "Loading"}
     </section>
   );
 }
