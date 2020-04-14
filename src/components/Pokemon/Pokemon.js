@@ -95,7 +95,7 @@ function Pokemon(props) {
             <PokemonEvolution />
           </Route>
           <Route path={`${routeMatch.url}/moves`}>
-            <PokemonMoves />
+            <PokemonMoves moves={moves} name={name} />
           </Route>
           <Redirect to={`${routeMatch.url}/about`} />
         </Switch>
