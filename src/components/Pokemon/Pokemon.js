@@ -1,6 +1,8 @@
 import React from "react";
 import { Route, Switch, NavLink, useRouteMatch, Redirect } from "react-router-dom";
 
+import { getEvolutionChain } from "../../api/api";
+
 import PokemonAbout from "../PokemonAbout/PokemonAbout";
 import PokemonEvolution from "../PokemonEvolution/PokemonEvolution";
 import PokemonStats from "../PokemonStats/PokemonStats";
@@ -92,7 +94,7 @@ function Pokemon(props) {
             <PokemonStats stats={stats} />
           </Route>
           <Route path={`${routeMatch.url}/evolution`}>
-            <PokemonEvolution />
+            <PokemonEvolution getEvolutionChain={getEvolutionChain} evolutionChainUrl={evolutionChainUrl} />
           </Route>
           <Route path={`${routeMatch.url}/moves`}>
             <PokemonMoves moves={moves} name={name} />
