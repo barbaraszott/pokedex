@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 
 import "./PokemonList.scss";
@@ -21,12 +21,11 @@ function PokemonList(props) {
   function onPageClick(page) {
     setCurrentPage(page);
   }
-
-  function onTypeSearch(event) {
+  const onTypeSearch = useCallback((event) => {
     const type = event.target.value;
     setType(type === "all" ? null : type);
     setCurrentPage(0);
-  }
+  }, []);
 
   useEffect(
     () => {
