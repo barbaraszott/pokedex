@@ -66,10 +66,29 @@ export async function catchPokemonData(pokemonName) {
   return { ...pokemonData, ...pokemonSpeciesData };
 }
 
-// export async function getEvolutionChain(evolutionChainUrl, speciesName) {
-//   const evolutionData = await axios.get(evolutionChainUrl).then(response => response.data.chain);
+export async function getEvolutionChain(evolutionChainUrl) {
+  const evolutionData = await axios.get(evolutionChainUrl).then((response) => response.data.chain);
+  const evolutions = {};
 
-// }
+  const first = evolutionData.species.name;
+  evolutions[first] = 0;
+
+  const secondEvolution = evolutionData.evolves_to;
+  if (secondEvolution.length !== 0) {
+    const second = secondEvolution[0].species.name;
+    const secondLevel = secondEvolution[0].evolution_details[0].min_level;
+    evolutions[second] = secondLevel;
+
+    const thirdEvolution = secondEvolution[0].evolves_to;
+    if (thirdEvolution.length !== 0) {
+      const third = thirdEvolution[0].species.name;
+      const thirdLevel = thirdEvolution[0].evolution_details[0].min_level;
+      evolutions[third] = thirdLevel;
+    }
+  }
+
+  return evolutions;
+}
 
 export async function getPokemonSpeciesData(speciesName) {
   const speciesData = await axios
@@ -79,7 +98,7 @@ export async function getPokemonSpeciesData(speciesName) {
   const generation = speciesData.generation ? speciesData.generation.name : null;
   const species = speciesData.genera.find((data) => data.language.name === "en").genus;
   const color = speciesData.color ? speciesData.color.name : null;
-  const habitat = speciesData.habitat ? speciesData.habitat.name : null;
+  const habitat = speciesData.habitat ? speciesData.habitat.name : "unknown";
   const hasGenderDifferences = speciesData.has_gender_differences || false;
   const description = speciesData.flavor_text_entries.find((data) => data.language.name === "en").flavor_text;
   const evolutionChainUrl = speciesData.evolution_chain ? speciesData.evolution_chain.url : null;
