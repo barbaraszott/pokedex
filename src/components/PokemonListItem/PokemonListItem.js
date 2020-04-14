@@ -13,6 +13,9 @@ function PokemonListItem(props) {
 
   const pokemonPicture = sprites.front_default ? sprites.front_default : noPic;
 
+  // 404 possible, so careful with this resource
+  // const pokemonImgSrc = `https://pokeres.bastionbot.org/images/pokemon/${id}.png`;
+
   return (
     <div className="list-item-container" style={backgroundColor}>
       <h2 className="name">
@@ -34,4 +37,4 @@ function PokemonListItem(props) {
   );
 }
 
-export default PokemonListItem;
+export default React.memo(PokemonListItem);

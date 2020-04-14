@@ -31,4 +31,4 @@ function PokemonAbout(props) {
   );
 }
 
-export default PokemonAbout;
+export default React.memo(PokemonAbout);

@@ -106,4 +106,4 @@ function Pokemon(props) {
   );
 }
 
-export default Pokemon;
+export default React.memo(Pokemon);

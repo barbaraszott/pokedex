@@ -20,4 +20,4 @@ function PokemonMoves(props) {
   );
 }
 
-export default PokemonMoves;
+export default React.memo(PokemonMoves);

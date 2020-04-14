@@ -46,4 +46,4 @@ function PokemonStats(props) {
   );
 }
 
-export default PokemonStats;
+export default React.memo(PokemonStats);

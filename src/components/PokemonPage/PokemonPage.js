@@ -30,4 +30,4 @@ function PokemonPage() {
   );
 }
 
-export default PokemonPage;
+export default React.memo(PokemonPage);
