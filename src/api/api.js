@@ -46,24 +46,43 @@ export async function gottaCatchThemAll({ limit, offset, type }) {
   }
 }
 
-export async function catchPokemonData(pokemonName) {
-  const allPokemonData = await axios
-    .get(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
-    .then((response) => response.data);
+function fetchPokemonData(pokemonName) {
+  return axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`).then((response) => response.data);
+}
 
-  const { id, height, weight, sprites, name } = allPokemonData;
-  const abilities = allPokemonData.abilities.map((abilityData) => abilityData.ability.name);
-  const moves = allPokemonData.moves.map((moveData) => moveData.move.name);
-  const stats = allPokemonData.stats.map((statData) => {
+function getUsefulPictures(sprites) {
+  const pictures = {
+    front: sprites.front_default,
+    frontFemale: sprites.front_female,
+    back: sprites.back_default,
+    backFemale: sprites.back_female,
+  };
+
+  return pictures;
+}
+
+async function fetchPokemonPicture(pokemonName) {
+  const pokemonData = await fetchPokemonData(pokemonName);
+
+  return getUsefulPictures(pokemonData.sprites);
+}
+
+export async function catchPokemonData(pokemonName) {
+  const pokemonData = await fetchPokemonData(pokemonName);
+  const { id, height, weight, sprites, name } = pokemonData;
+  const pictures = getUsefulPictures(sprites);
+  const abilities = pokemonData.abilities.map((abilityData) => abilityData.ability.name);
+  const moves = pokemonData.moves.map((moveData) => moveData.move.name);
+  const stats = pokemonData.stats.map((statData) => {
     return { name: statData.stat.name, baseStat: statData.base_stat };
   });
-  const types = allPokemonData.types.map((typeData) => typeData.type.name);
-  const speciesName = allPokemonData.species.name;
+  const types = pokemonData.types.map((typeData) => typeData.type.name);
+  const speciesName = pokemonData.species.name;
 
-  const pokemonData = { name, id, height, weight, types, abilities, stats, moves, sprites };
+  const preparedPokemonData = { name, id, height, weight, types, abilities, stats, moves, pictures };
   const pokemonSpeciesData = await getPokemonSpeciesData(speciesName);
 
-  return { ...pokemonData, ...pokemonSpeciesData };
+  return { ...preparedPokemonData, ...pokemonSpeciesData };
 }
 
 export async function getEvolutionChain(evolutionChainUrl) {
@@ -71,20 +90,31 @@ export async function getEvolutionChain(evolutionChainUrl) {
   const evolutions = {};
 
   const first = evolutionData.species.name;
-  evolutions[first] = 0;
+  evolutions[first] = {
+    level: 0,
+  };
 
   const secondEvolution = evolutionData.evolves_to;
   if (secondEvolution.length !== 0) {
     const second = secondEvolution[0].species.name;
     const secondLevel = secondEvolution[0].evolution_details[0].min_level;
-    evolutions[second] = secondLevel;
+    evolutions[second] = {
+      level: secondLevel,
+    };
 
     const thirdEvolution = secondEvolution[0].evolves_to;
     if (thirdEvolution.length !== 0) {
       const third = thirdEvolution[0].species.name;
       const thirdLevel = thirdEvolution[0].evolution_details[0].min_level;
-      evolutions[third] = thirdLevel;
+      evolutions[third] = {
+        level: thirdLevel,
+      };
     }
+  }
+
+  for (let pokemonName in evolutions) {
+    console.log(pokemonName);
+    evolutions[pokemonName].pictures = await fetchPokemonPicture(pokemonName);
   }
 
   return evolutions;
