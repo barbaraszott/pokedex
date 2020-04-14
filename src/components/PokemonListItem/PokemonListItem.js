@@ -2,7 +2,7 @@ import React from "react";
 
 import getPokemonColor from "../../tools/pokemonColor";
 import "./PokemonListItem.scss";
-import * as noPic from "../../tools/no-picture.png";
+import noPic from "../../tools/no-picture.png";
 
 function PokemonListItem(props) {
   const { name, id, sprites, types, color } = props;
