@@ -7,8 +7,8 @@ import PokemonAbout from "../PokemonAbout/PokemonAbout";
 import PokemonEvolution from "../PokemonEvolution/PokemonEvolution";
 import PokemonStats from "../PokemonStats/PokemonStats";
 import PokemonMoves from "../PokemonMoves/PokemonMoves";
+import PokemonPicture from "../PokemonPicture/PokemonPicture";
 
-import * as noPic from "../../tools/no-picture.png";
 import "./Pokemon.scss";
 
 function Pokemon(props) {
@@ -21,7 +21,7 @@ function Pokemon(props) {
     abilities,
     stats,
     moves,
-    sprites,
+    pictures,
     color,
     habitat,
     generation,
@@ -31,8 +31,6 @@ function Pokemon(props) {
     pokemonColor,
     species,
   } = props;
-
-  const pokemonPicture = sprites.front_default ? sprites.front_default : noPic;
 
   const aboutProps = { description, species, height, weight, abilities, habitat, generation };
 
@@ -52,7 +50,7 @@ function Pokemon(props) {
           ))}
         </div>
         <figure className="pokemon-page__img-container">
-          <img src={pokemonPicture} alt="" className="pokemon-page__img-container__img"></img>
+          <PokemonPicture picture={pictures.front} />
         </figure>
       </section>
       <main className="pokemon-info__content">

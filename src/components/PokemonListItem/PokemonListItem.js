@@ -2,16 +2,14 @@ import React from "react";
 
 import getPokemonColor from "../../tools/pokemonColor";
 import "./PokemonListItem.scss";
-import noPic from "../../tools/no-picture.png";
+import PokemonPicture from "../PokemonPicture/PokemonPicture";
 
 function PokemonListItem(props) {
-  const { name, id, sprites, types, color } = props;
+  const { name, id, pictures, types, color } = props;
 
   const backgroundColor = {
     backgroundColor: getPokemonColor(color),
   };
-
-  const pokemonPicture = sprites.front_default ? sprites.front_default : noPic;
 
   // 404 possible, so careful with this resource
   // const pokemonImgSrc = `https://pokeres.bastionbot.org/images/pokemon/${id}.png`;
@@ -23,7 +21,7 @@ function PokemonListItem(props) {
       </h2>
       <section className="info">
         <figure className="pokemon-img-container">
-          <img src={pokemonPicture} alt="" className="pokemon-img-container__img"></img>
+          <PokemonPicture picture={pictures.front} />
         </figure>
         <div className="types-container">
           {types.map((type) => (
