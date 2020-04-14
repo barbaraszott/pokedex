@@ -1,0 +1,9 @@
+.pokemon-moves-list {
+  list-style-position: outside;
+  list-style-image: url("../../tools/pokeball-list-image.png");
+
+  &__item {
+    text-transform: capitalize;
+    padding-left: 10px;
+  }
+}
