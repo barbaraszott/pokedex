@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
 
 import "./PokemonList.scss";
 
@@ -12,11 +12,10 @@ function PokemonList(props) {
   const [isLoading, setLoading] = useState(true);
   const [pokemonList, setPokemonList] = useState([]);
   const [pokemonCount, setPokemonCount] = useState(0);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [type, setType] = useState(null);
+  const { type, page } = useParams();
 
   const limit = 20;
-  const offset = currentPage * limit;
+  const offset = page * limit;
 
   const onTypeSearch = useCallback((event) => {
     const type = event.target.value;
