@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 
 import getPokemonColor from "../../tools/pokemonColor";
 import Pokemon from "../Pokemon/Pokemon";
@@ -12,6 +12,8 @@ function PokemonPage() {
   const [pokemonColor, setPokemonColor] = useState(null);
   const { name } = useParams();
 
+  let history = useHistory();
+
   useEffect(() => {
     catchPokemonData(name).then((data) => {
       setPokemonData(data);
@@ -22,9 +24,9 @@ function PokemonPage() {
 
   return (
     <section className="pokemon-page">
-      <Link to="/" className="back-arrow">
+      <button className="back-arrow" onClick={() => history.goBack()}>
         &#129104;
-      </Link>
+      </button>
       {pokemonData ? <Pokemon {...pokemonData} pokemonColor={pokemonColor} /> : "Loading"}
     </section>
   );
