@@ -39,7 +39,7 @@ async function catchWithType({ limit, offset, type }) {
 }
 
 export async function gottaCatchThemAll({ limit, offset, type }) {
-  if (type) {
+  if (type !== "all") {
     return catchWithType({ limit, offset, type });
   } else {
     return catchAll({ limit, offset });
@@ -53,9 +53,7 @@ function fetchPokemonData(pokemonName) {
 function getUsefulPictures(sprites) {
   const pictures = {
     front: sprites.front_default,
-    frontFemale: sprites.front_female,
     back: sprites.back_default,
-    backFemale: sprites.back_female,
   };
 
   return pictures;
@@ -113,7 +111,6 @@ export async function getEvolutionChain(evolutionChainUrl) {
   }
 
   for (let pokemonName in evolutions) {
-    console.log(pokemonName);
     evolutions[pokemonName].pictures = await fetchPokemonPicture(pokemonName);
   }
 
@@ -129,9 +126,8 @@ export async function getPokemonSpeciesData(speciesName) {
   const species = speciesData.genera.find((data) => data.language.name === "en").genus;
   const color = speciesData.color ? speciesData.color.name : null;
   const habitat = speciesData.habitat ? speciesData.habitat.name : "unknown";
-  const hasGenderDifferences = speciesData.has_gender_differences || false;
   const description = speciesData.flavor_text_entries.find((data) => data.language.name === "en").flavor_text;
   const evolutionChainUrl = speciesData.evolution_chain ? speciesData.evolution_chain.url : null;
 
-  return { species, color, habitat, generation, description, hasGenderDifferences, evolutionChainUrl };
+  return { species, color, habitat, generation, description, evolutionChainUrl };
 }
