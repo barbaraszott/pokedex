@@ -22,11 +22,9 @@ function Pokemon(props) {
     stats,
     moves,
     pictures,
-    color,
     habitat,
     generation,
     description,
-    hasGenderDifferences,
     evolutionChainUrl,
     pokemonColor,
     species,
@@ -59,6 +57,7 @@ function Pokemon(props) {
             to={`${routeMatch.url}/about`}
             className="pokemon-info__navigation__link"
             activeClassName="pokemon-info__navigation__link--selected"
+            replace={true}
           >
             About
           </NavLink>
@@ -66,6 +65,7 @@ function Pokemon(props) {
             to={`${routeMatch.url}/stats`}
             className="pokemon-info__navigation__link"
             activeClassName="pokemon-info__navigation__link--selected"
+            replace={true}
           >
             Base Stats
           </NavLink>
@@ -73,6 +73,7 @@ function Pokemon(props) {
             to={`${routeMatch.url}/evolution`}
             className="pokemon-info__navigation__link"
             activeClassName="pokemon-info__navigation__link--selected"
+            replace={true}
           >
             Evolution
           </NavLink>
@@ -80,6 +81,7 @@ function Pokemon(props) {
             to={`${routeMatch.url}/moves`}
             className="pokemon-info__navigation__link"
             activeClassName="pokemon-info__navigation__link--selected"
+            replace={true}
           >
             Moves
           </NavLink>
@@ -92,7 +94,11 @@ function Pokemon(props) {
             <PokemonStats stats={stats} />
           </Route>
           <Route path={`${routeMatch.url}/evolution`}>
-            <PokemonEvolution getEvolutionChain={getEvolutionChain} evolutionChainUrl={evolutionChainUrl} />
+            <PokemonEvolution
+              getEvolutionChain={getEvolutionChain}
+              evolutionChainUrl={evolutionChainUrl}
+              levelBackgroundColor={pokemonColor}
+            />
           </Route>
           <Route path={`${routeMatch.url}/moves`}>
             <PokemonMoves moves={moves} name={name} />
