@@ -69,7 +69,12 @@ function PokemonList(props) {
         {!isLoading &&
           pokemonList.length > 0 &&
           pokemonList.map((data) => (
-            <Link to={`/pokemon/${data.name}`} key={data.id} data-testid="pokemon-list-item">
+            <Link
+              to={`/pokemon/${data.name}`}
+              key={data.id}
+              data-testid="pokemon-list-item"
+              className="pokemon-list__item"
+            >
               <PokemonListItem {...data} />
             </Link>
           ))}

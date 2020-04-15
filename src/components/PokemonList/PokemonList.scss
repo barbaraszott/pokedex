@@ -3,6 +3,7 @@
 .pokedex {
   margin: 0 auto;
   max-width: 85vw;
+  min-height: 85vh;
   padding: 20px;
   border-radius: 20px;
   background-color: $pokedex-background-color;
@@ -11,11 +12,10 @@
 
 .pokemon-list {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   flex-wrap: wrap;
 
-  // Links from Router
-  & a {
+  &__item {
     text-decoration: none;
   }
 }
