@@ -53,7 +53,7 @@ function PokemonList(props) {
         <h1>Pokedex</h1>
       </header>
       <section className="pokemon-search">
-        <Search onTypeSearch={onTypeSearch} />
+        <Search onTypeSearch={onTypeSearch} currentType={type} />
       </section>
       <section className="pokemon-list" id="pokemons">
         {isLoading && <Spinner />}
