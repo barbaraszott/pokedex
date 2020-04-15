@@ -26,6 +26,12 @@ function PokemonList(props) {
     [history]
   );
 
+  const onPaginationClick = useCallback(
+    (clickedPage) => {
+      history.push(`/list/${type}/${clickedPage}`);
+    },
+    [history, type]
+  );
 
   useEffect(
     () => {
@@ -62,7 +68,12 @@ function PokemonList(props) {
       </section>
 
       {!isLoading && (
-        <Pagination currentPageIndex={currentPage} count={pokemonCount} limit={limit} onPageClick={setCurrentPage} />
+        <Pagination
+          currentPageIndex={Number(page)}
+          count={pokemonCount}
+          limit={limit}
+          onPageClick={onPaginationClick}
+        />
       )}
     </section>
   );
