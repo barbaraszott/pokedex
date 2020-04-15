@@ -29,7 +29,7 @@ function PokemonPage() {
   return (
     <section className="pokemon-page">
       <button className="back-arrow" onClick={() => history.goBack()}>
-        &#129104;
+        ←
       </button>
       {pokemonData ? <Pokemon {...pokemonData} pokemonColor={pokemonColor} /> : "Loading"}
     </section>
