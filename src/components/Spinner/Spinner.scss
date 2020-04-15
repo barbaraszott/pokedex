@@ -1,0 +1,33 @@
+.spinner-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 50px;
+}
+
+.spinner {
+  width: 100px;
+  height: 100px;
+  background: url("../../tools/pokeball.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  animation-name: animation-spinner;
+  animation-duration: 3s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@keyframes animation-spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  80% {
+    transform: rotate(1440deg);
+  }
+
+  100% {
+    transform: rotate(1440deg);
+  }
+}
