@@ -1,23 +1,13 @@
-import React, { useEffect, useState } from "react";
-
-import { getPokemonTypes } from "../api/api";
+import React from "react";
 
 function Search(props) {
-  const { onTypeSearch, currentType } = props;
-
-  const [types, setTypes] = useState([]);
-
-  useEffect(() => {
-    getPokemonTypes().then((types) => {
-      setTypes(["all", ...types]);
-    });
-  }, []);
+  const { onTypeSearch, currentType, typesList } = props;
 
   return (
     <form>
       <label htmlFor="type">Choose pokemon type:</label>
       <select id="type" onChange={onTypeSearch} value={currentType}>
-        {types.map((type) => (
+        {typesList.map((type) => (
           <option value={type} key={`type-${type}`}>
             {type}
           </option>

@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-d
 import PokemonPage from "../PokemonPage/PokemonPage";
 import PokemonList from "../PokemonList/PokemonList";
 
-import { gottaCatchThemAll } from "../../api/api";
+import { gottaCatchThemAll, getPokemonTypes } from "../../api/api";
 import "./App.scss";
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
       <main className="content">
         <Switch>
           <Route path="/list/:type/:page" exact>
-            <PokemonList gottaCatchThemAll={gottaCatchThemAll} />
+            <PokemonList gottaCatchThemAll={gottaCatchThemAll} getPokemonTypes={getPokemonTypes} />
           </Route>
           <Route path="/pokemon/:name">
             <PokemonPage />

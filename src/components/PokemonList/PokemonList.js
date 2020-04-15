@@ -9,9 +9,11 @@ import Search from "../Search";
 import Spinner from "../../tools/Spinner";
 
 function PokemonList(props) {
+  const { gottaCatchThemAll, getPokemonTypes } = props;
   const [isLoading, setLoading] = useState(true);
   const [pokemonList, setPokemonList] = useState([]);
   const [pokemonCount, setPokemonCount] = useState(0);
+  const [typesList, setTypesList] = useState([]);
   const { type, page } = useParams();
 
   const limit = 20;
@@ -38,14 +40,20 @@ function PokemonList(props) {
       if (!isLoading) {
         setLoading(true);
       }
-      props.gottaCatchThemAll({ limit, offset, type }).then(({ pokemons, count }) => {
+      gottaCatchThemAll({ limit, offset, type }).then(({ pokemons, count }) => {
         setPokemonList(pokemons);
         setPokemonCount(count);
         setLoading(false);
       });
     },
-    [offset, type] // eslint-disable-line
+    [gottaCatchThemAll, offset, type] // eslint-disable-line
   );
+
+  useEffect(() => {
+    getPokemonTypes().then((types) => {
+      setTypesList(["all", ...types]);
+    });
+  }, [getPokemonTypes]);
 
   return (
     <section className="pokedex">
@@ -53,7 +61,7 @@ function PokemonList(props) {
         <h1>Pokedex</h1>
       </header>
       <section className="pokemon-search">
-        <Search onTypeSearch={onTypeSearch} currentType={type} />
+        <Search onTypeSearch={onTypeSearch} currentType={type} typesList={typesList} />
       </section>
       <section className="pokemon-list" id="pokemons">
         {isLoading && <Spinner />}
