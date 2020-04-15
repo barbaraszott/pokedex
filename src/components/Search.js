@@ -3,23 +3,20 @@ import React, { useEffect, useState } from "react";
 import { getPokemonTypes } from "../api/api";
 
 function Search(props) {
-  const { onTypeSearch } = props;
+  const { onTypeSearch, currentType } = props;
 
   const [types, setTypes] = useState([]);
 
   useEffect(() => {
     getPokemonTypes().then((types) => {
-      setTypes(types);
+      setTypes(["all", ...types]);
     });
   }, []);
 
   return (
     <form>
-      <label htmlFor="type">Choose a type:</label>
-      <select id="type" onChange={onTypeSearch}>
-        <option value="all" key={`type-all`}>
-          All
-        </option>
+      <label htmlFor="type">Choose pokemon type:</label>
+      <select id="type" onChange={onTypeSearch} value={currentType}>
         {types.map((type) => (
           <option value={type} key={`type-${type}`}>
             {type}
