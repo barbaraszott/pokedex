@@ -5,8 +5,8 @@ import "./PokemonList.scss";
 
 import PokemonListItem from "../PokemonListItem/PokemonListItem";
 import Pagination from "../Pagination/Pagination";
-import Search from "../Search";
-import Spinner from "../../tools/Spinner";
+import Filter from "../Filter/Filter";
+import Spinner from "../Spinner/Spinner";
 
 function PokemonList(props) {
   const { gottaCatchThemAll, getPokemonTypes } = props;
@@ -61,7 +61,7 @@ function PokemonList(props) {
         <h1>Pokedex</h1>
       </header>
       <section className="pokemon-search">
-        <Search onTypeSearch={onTypeSearch} currentType={type} typesList={typesList} />
+        <Filter onTypeSearch={onTypeSearch} currentType={type} typesList={typesList} />
       </section>
       <section className="pokemon-list" id="pokemons">
         {isLoading && <Spinner />}

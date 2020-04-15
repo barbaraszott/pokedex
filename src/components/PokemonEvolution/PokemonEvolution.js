@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import "./PokemonEvolution.scss";
-import Spinner from "../../tools/Spinner";
+import Spinner from "../Spinner/Spinner";
 import PokemonPicture from "../PokemonPicture/PokemonPicture";
 
 function showEvolutions(evolutions, levelBackgroundColor) {

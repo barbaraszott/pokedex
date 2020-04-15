@@ -1,0 +1,34 @@
+@import "../../tools/colors.scss";
+
+.filter-form {
+  font-size: 0.8em;
+  margin-bottom: 2em;
+
+  &--type {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+}
+
+.filter__label {
+  font-weight: bold;
+  text-transform: uppercase;
+  color: $navigation-color-selected;
+  flex: 0 1 125px;
+}
+
+.filter__select {
+  flex: 1;
+  color: $filter-select-color;
+  font-weight: bold;
+  text-transform: capitalize;
+  border: 1px solid $filter-select-bcg;
+  border-radius: 5px;
+  padding: 5px 10px;
+  background-image: linear-gradient(to bottom, #fff 0%, $filter-select-bcg 100%);
+
+  &:hover {
+    border-color: #888;
+  }
+}
