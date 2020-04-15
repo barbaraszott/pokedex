@@ -8,9 +8,9 @@ function PokemonAbout(props) {
     species: props.species,
     height: props.height,
     weight: props.weight,
-    abilities: props.abilities.join(", ").replace(/-/g, " "),
+    abilities: props.abilities.join(", "),
     habitat: props.habitat,
-    generation: props.generation.replace(/generation-/i, "").toUpperCase(),
+    generation: props.generation,
   };
   const pokemonDataEntries = Object.entries(pokemonData);
 

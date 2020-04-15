@@ -1,12 +1,6 @@
 import axios from "axios";
 
-export async function getPokemonTypes() {
-  const pokeApiTypeCall = "https://pokeapi.co/api/v2/type";
-  const typeList = await axios.get(pokeApiTypeCall).then((response) => response.data.results);
-  const types = typeList.map((type) => type.name);
-
-  return types;
-}
+// CATCH ALL POKEMONS, NO MATTER TYPE
 
 async function catchAll({ limit, offset }) {
   const pokeApi = "https://pokeapi.co/api/v2/pokemon";
@@ -24,6 +18,8 @@ async function catchAll({ limit, offset }) {
   return { pokemons, count };
 }
 
+// CATCH ALL POKEMONS, WITH PARTICULAR TYPE
+
 async function catchWithType({ limit, offset, type }) {
   const pokemonList = await axios
     .get(`https://pokeapi.co/api/v2/type/${type}`)
@@ -38,6 +34,8 @@ async function catchWithType({ limit, offset, type }) {
   return { pokemons, count };
 }
 
+// CATCH POKEMONS
+
 export async function gottaCatchThemAll({ limit, offset, type }) {
   if (type !== "all") {
     return catchWithType({ limit, offset, type });
@@ -46,9 +44,13 @@ export async function gottaCatchThemAll({ limit, offset, type }) {
   }
 }
 
+// FIND ALL POKEMON DATA - USING ITS NAME
+
 function fetchPokemonData(pokemonName) {
   return axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`).then((response) => response.data);
 }
+
+// GET POKEMON'S PICTURES
 
 function getUsefulPictures(sprites) {
   const pictures = {
@@ -65,14 +67,50 @@ async function fetchPokemonPicture(pokemonName) {
   return getUsefulPictures(pokemonData.sprites);
 }
 
+// EXPORTS
+
+// GET ALL POSSIBLE POKEMONS' TYPES
+
+export async function getPokemonTypes() {
+  const pokeApiTypeCall = "https://pokeapi.co/api/v2/type";
+  const typeList = await axios.get(pokeApiTypeCall).then((response) => response.data.results);
+  const types = typeList.map((type) => type.name);
+
+  return types;
+}
+
+// GET POKEMON'S SPECIES DATA BY USING ITS NAME  AND PREPARE IT FOR LATER USE
+
+export async function getPokemonSpeciesData(speciesName) {
+  const speciesData = await axios
+    .get(`https://pokeapi.co/api/v2/pokemon-species/${speciesName}`)
+    .then((response) => response.data);
+
+  const generation = speciesData.generation
+    ? speciesData.generation.name.replace(/generation-/i, "").toUpperCase()
+    : null;
+  const species = speciesData.genera.find((data) => data.language.name === "en").genus;
+  const color = speciesData.color ? speciesData.color.name : null;
+  const habitat = speciesData.habitat ? speciesData.habitat.name : "unknown";
+  const description = speciesData.flavor_text_entries.find((data) => data.language.name === "en").flavor_text;
+  const evolutionChainUrl = speciesData.evolution_chain ? speciesData.evolution_chain.url : null;
+
+  return { species, color, habitat, generation, description, evolutionChainUrl };
+}
+
+// CATCH POKEMON DATA BY USING ITS NAME AND PREPARE IT FOR LATER USE IN APP
+
 export async function catchPokemonData(pokemonName) {
   const pokemonData = await fetchPokemonData(pokemonName);
-  const { id, height, weight, sprites, name } = pokemonData;
+  const { id, sprites } = pokemonData;
+  const height = Number(pokemonData.height);
+  const weight = Number(pokemonData.weight);
+  const name = pokemonData.name;
   const pictures = getUsefulPictures(sprites);
-  const abilities = pokemonData.abilities.map((abilityData) => abilityData.ability.name);
-  const moves = pokemonData.moves.map((moveData) => moveData.move.name);
+  const abilities = pokemonData.abilities.map((abilityData) => abilityData.ability.name.replace(/-/g, " "));
+  const moves = pokemonData.moves.map((moveData) => moveData.move.name.replace(/-/g, " "));
   const stats = pokemonData.stats.map((statData) => {
-    return { name: statData.stat.name, baseStat: statData.base_stat };
+    return { name: statData.stat.name, baseStat: Number(statData.base_stat) };
   });
   const types = pokemonData.types.map((typeData) => typeData.type.name);
   const speciesName = pokemonData.species.name;
@@ -82,6 +120,8 @@ export async function catchPokemonData(pokemonName) {
 
   return { ...preparedPokemonData, ...pokemonSpeciesData };
 }
+
+// GET EVOLUTION CHAIN DATA
 
 export async function getEvolutionChain(evolutionChainUrl) {
   const evolutionData = await axios.get(evolutionChainUrl).then((response) => response.data.chain);
@@ -115,19 +155,4 @@ export async function getEvolutionChain(evolutionChainUrl) {
   }
 
   return evolutions;
-}
-
-export async function getPokemonSpeciesData(speciesName) {
-  const speciesData = await axios
-    .get(`https://pokeapi.co/api/v2/pokemon-species/${speciesName}`)
-    .then((response) => response.data);
-
-  const generation = speciesData.generation ? speciesData.generation.name : null;
-  const species = speciesData.genera.find((data) => data.language.name === "en").genus;
-  const color = speciesData.color ? speciesData.color.name : null;
-  const habitat = speciesData.habitat ? speciesData.habitat.name : "unknown";
-  const description = speciesData.flavor_text_entries.find((data) => data.language.name === "en").flavor_text;
-  const evolutionChainUrl = speciesData.evolution_chain ? speciesData.evolution_chain.url : null;
-
-  return { species, color, habitat, generation, description, evolutionChainUrl };
 }

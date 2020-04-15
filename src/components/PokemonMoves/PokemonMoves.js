@@ -8,7 +8,9 @@ function PokemonMoves(props) {
 
   return (
     <>
-      <h2>All possible {name}'s moves</h2>
+      <h2 className="pokemon-moves-header">
+        All possible <span className="pokemon-moves-header__name">{name}'s</span> moves
+      </h2>
       <ul className="pokemon-moves-list">
         {moves.map((move) => (
           <li className="pokemon-moves-list__item" key={`pokemon-moves-${move}`}>

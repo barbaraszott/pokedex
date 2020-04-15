@@ -1,3 +1,9 @@
+.pokemon-moves-header {
+  &__name {
+    text-transform: capitalize;
+  }
+}
+
 .pokemon-moves-list {
   list-style-position: outside;
   list-style-image: url("../../tools/pokeball-list-image.png");

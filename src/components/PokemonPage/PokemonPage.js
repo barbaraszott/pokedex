@@ -17,7 +17,11 @@ function PokemonPage() {
   useEffect(() => {
     catchPokemonData(name).then((data) => {
       setPokemonData(data);
-      document.title = `Viewing ${data.name}`;
+      const nameToShowInTitle = data.name
+        .split("-")
+        .map((name) => name[0].toUpperCase() + name.substr(1))
+        .join(" ");
+      document.title = `Viewing ${nameToShowInTitle}`;
       setPokemonColor(getPokemonColor(data.color));
     });
   }, [name]);

@@ -13,7 +13,6 @@ import "./Pokemon.scss";
 
 function Pokemon(props) {
   const {
-    name,
     id,
     height,
     weight,
@@ -30,6 +29,7 @@ function Pokemon(props) {
     species,
   } = props;
 
+  const name = props.name.replace(/-/g, " ");
   const aboutProps = { description, species, height, weight, abilities, habitat, generation };
 
   let routeMatch = useRouteMatch();

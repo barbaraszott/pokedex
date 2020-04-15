@@ -5,7 +5,8 @@ import "./PokemonListItem.scss";
 import PokemonPicture from "../PokemonPicture/PokemonPicture";
 
 function PokemonListItem(props) {
-  const { name, id, pictures, types, color } = props;
+  const { id, pictures, types, color } = props;
+  const name = props.name.replace(/-/g, " ");
 
   const backgroundColor = {
     backgroundColor: getPokemonColor(color),
