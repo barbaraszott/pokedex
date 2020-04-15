@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 
 import PokemonPage from "../PokemonPage/PokemonPage";
 import PokemonList from "../PokemonList/PokemonList";
@@ -11,12 +11,15 @@ function App() {
   return (
     <Router>
       <main className="content">
-        <Route path="/" exact>
-          <PokemonList gottaCatchThemAll={gottaCatchThemAll} />
-        </Route>
-        <Route path="/pokemon/:name">
-          <PokemonPage />
-        </Route>
+        <Switch>
+          <Route path="/list/:type/:page" exact>
+            <PokemonList gottaCatchThemAll={gottaCatchThemAll} />
+          </Route>
+          <Route path="/pokemon/:name">
+            <PokemonPage />
+          </Route>
+          <Redirect to="/list/all/0" />
+        </Switch>
       </main>
     </Router>
   );
