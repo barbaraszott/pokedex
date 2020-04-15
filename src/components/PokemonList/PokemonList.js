@@ -16,12 +16,16 @@ function PokemonList(props) {
 
   const limit = 20;
   const offset = page * limit;
+  let history = useHistory();
 
-  const onTypeSearch = useCallback((event) => {
-    const type = event.target.value;
-    setType(type === "all" ? null : type);
-    setCurrentPage(0);
-  }, []);
+  const onTypeSearch = useCallback(
+    (event) => {
+      const searchedTyped = event.target.value;
+      history.push(`/list/${searchedTyped}/0`);
+    },
+    [history]
+  );
+
 
   useEffect(
     () => {
