@@ -24,7 +24,7 @@ function Pagination(props) {
   const { currentPageIndex, count, limit, onPageClick } = props;
   const totalPagesCount = Math.ceil(count / limit);
   const lastPageIndex = totalPagesCount - 1;
-  const pageNeighboursCount = 2;
+  const pageNeighboursCount = window.innerWidth < 768 ? 1 : 2;
   const pagesToShowCount = 2 * pageNeighboursCount + 1;
   const paginationPagesCount = Math.min(pagesToShowCount, totalPagesCount);
   const firstShownPageIndex = findFirstPaginationLinkIndex(
