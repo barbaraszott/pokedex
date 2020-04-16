@@ -28,6 +28,20 @@ function showEvolutions(evolutions, levelBackgroundColor) {
   );
 }
 
+function showUnknown(levelBackgroundColor) {
+  return (
+    <div className="pokemon-evolution">
+      <span className="pokemon-evolution__name">No evolution data avaiable.</span>
+      <figure className="pokemon-evolution__picture">
+        <PokemonPicture picture={null} />
+      </figure>
+      <div className="pokemon-evolution__level" style={{ backgroundColor: levelBackgroundColor }}>
+        ?
+      </div>
+    </div>
+  );
+}
+
 function PokemonEvolution(props) {
   const { evolutionChainUrl, getEvolutionChain, levelBackgroundColor } = props;
 
@@ -50,7 +64,7 @@ function PokemonEvolution(props) {
   return (
     <>
       {isLoading && <Spinner />}
-      {!isLoading && error && <span>{error.message}</span>}
+      {!isLoading && error && showUnknown(levelBackgroundColor)}
       {!isLoading && !error && showEvolutions(evolutions, levelBackgroundColor)}
     </>
   );
