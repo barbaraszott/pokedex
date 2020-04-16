@@ -31,19 +31,26 @@ function PokemonEvolution(props) {
   const { evolutionChainUrl, getEvolutionChain, levelBackgroundColor } = props;
 
   const [isLoading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [evolutions, setEvolutions] = useState({});
 
   useEffect(() => {
-    getEvolutionChain(evolutionChainUrl).then((evolutions) => {
-      setEvolutions(evolutions);
-      setLoading(false);
-    });
+    getEvolutionChain(evolutionChainUrl)
+      .then((evolutions) => {
+        setEvolutions(evolutions);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error);
+        setLoading(false);
+      });
   }, [evolutionChainUrl, getEvolutionChain]);
 
   return (
     <>
       {isLoading && <Spinner />}
-      {!isLoading && showEvolutions(evolutions, levelBackgroundColor)}
+      {!isLoading && error && <span>{error.message}</span>}
+      {!isLoading && !error && showEvolutions(evolutions, levelBackgroundColor)}
     </>
   );
 }

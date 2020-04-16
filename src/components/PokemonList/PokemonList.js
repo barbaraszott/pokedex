@@ -11,6 +11,7 @@ import Spinner from "../Spinner/Spinner";
 function PokemonList(props) {
   const { gottaCatchThemAll, getPokemonTypes } = props;
   const [isLoading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [pokemonList, setPokemonList] = useState([]);
   const [pokemonCount, setPokemonCount] = useState(0);
   const [typesList, setTypesList] = useState([]);
@@ -40,11 +41,16 @@ function PokemonList(props) {
       if (!isLoading) {
         setLoading(true);
       }
-      gottaCatchThemAll({ limit, offset, type }).then(({ pokemons, count }) => {
-        setPokemonList(pokemons);
-        setPokemonCount(count);
-        setLoading(false);
-      });
+      gottaCatchThemAll({ limit, offset, type })
+        .then(({ pokemons, count }) => {
+          setPokemonList(pokemons);
+          setPokemonCount(count);
+          setLoading(false);
+        })
+        .catch((error) => {
+          setError(error);
+          setLoading(false);
+        });
     },
     [gottaCatchThemAll, offset, type] // eslint-disable-line
   );
@@ -65,8 +71,10 @@ function PokemonList(props) {
       </section>
       <section className="pokemon-list" id="pokemons">
         {isLoading && <Spinner />}
-        {!isLoading && pokemonList.length === 0 && <span>No pokemons :(</span>}
+        {!isLoading && error && <span>{error.message}</span>}
+        {!isLoading && !error && pokemonList.length === 0 && <span>No pokemons :(</span>}
         {!isLoading &&
+          !error &&
           pokemonList.length > 0 &&
           pokemonList.map((data) => (
             <Link
@@ -80,7 +88,7 @@ function PokemonList(props) {
           ))}
       </section>
 
-      {!isLoading && (
+      {!isLoading && !error && (
         <Pagination
           currentPageIndex={Number(page)}
           count={pokemonCount}
