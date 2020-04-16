@@ -109,8 +109,8 @@ export async function getPokemonSpeciesData(speciesName) {
 export async function catchPokemonData(pokemonName) {
   const pokemonData = await fetchPokemonData(pokemonName);
   const { id, sprites } = pokemonData;
-  const height = Number(pokemonData.height);
-  const weight = Number(pokemonData.weight);
+  const height = Number(pokemonData.height) / 10;
+  const weight = Number(pokemonData.weight) / 10;
   const name = pokemonData.name;
   const pictures = getUsefulPictures(sprites);
   const abilities = pokemonData.abilities.map((abilityData) => abilityData.ability.name.replace(/-/g, " "));

@@ -1,13 +1,12 @@
 import React from "react";
 
 import "./PokemonAbout.scss";
-
 function PokemonAbout(props) {
   const description = props.description;
   const pokemonData = {
     species: props.species,
-    height: props.height,
-    weight: props.weight,
+    height: props.height + "m",
+    weight: props.weight + "kg",
     abilities: props.abilities.join(", "),
     habitat: props.habitat,
     generation: props.generation,
