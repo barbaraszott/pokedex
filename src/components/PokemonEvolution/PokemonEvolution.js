@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import "./PokemonEvolution.scss";
+
 import Spinner from "../Spinner/Spinner";
 import PokemonPicture from "../PokemonPicture/PokemonPicture";
 
@@ -18,7 +19,7 @@ function showEvolutions(evolutions, levelBackgroundColor) {
               <PokemonPicture picture={evolutionInfo.pictures.front} />
             </figure>
             <div className="pokemon-evolution__level" style={{ backgroundColor: levelBackgroundColor }}>
-              {evolutionInfo.level === null ? "?" : evolutionInfo.level}
+              {evolutionInfo.level}
             </div>
           </Link>
         );

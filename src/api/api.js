@@ -129,6 +129,23 @@ export async function catchPokemonData(pokemonName) {
 
 // GET EVOLUTION CHAIN DATA
 
+function getNextEvolutions(evolutionData, evolutions = {}) {
+  const nextEvolution = evolutionData.evolves_to[0];
+
+  if (!nextEvolution) {
+    return evolutions;
+  }
+
+  const nextEvolutionName = nextEvolution.species.name;
+  const nextEvolutionLevel = nextEvolution.evolution_details[0].min_level || "?";
+
+  evolutions[nextEvolutionName] = {
+    level: nextEvolutionLevel,
+  };
+
+  getNextEvolutions(nextEvolution, evolutions);
+}
+
 export async function getEvolutionChain(evolutionChainUrl) {
   const response = await apiFetch(evolutionChainUrl);
   const evolutionData = response.chain;
@@ -139,23 +156,7 @@ export async function getEvolutionChain(evolutionChainUrl) {
     level: 0,
   };
 
-  const secondEvolution = evolutionData.evolves_to;
-  if (secondEvolution.length !== 0) {
-    const second = secondEvolution[0].species.name;
-    const secondLevel = secondEvolution[0].evolution_details[0].min_level;
-    evolutions[second] = {
-      level: secondLevel,
-    };
-
-    const thirdEvolution = secondEvolution[0].evolves_to;
-    if (thirdEvolution.length !== 0) {
-      const third = thirdEvolution[0].species.name;
-      const thirdLevel = thirdEvolution[0].evolution_details[0].min_level;
-      evolutions[third] = {
-        level: thirdLevel,
-      };
-    }
-  }
+  getNextEvolutions(evolutionData, evolutions);
 
   for (let pokemonName in evolutions) {
     const pokemonPictures = await fetchPokemonPicture(pokemonName);
