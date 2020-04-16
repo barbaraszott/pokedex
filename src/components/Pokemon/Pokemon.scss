@@ -74,3 +74,21 @@
     }
   }
 }
+
+@media (max-width: 460px) {
+  .pokemon__header {
+    background-position: 135px 37px;
+    background-size: 130px;
+    background-position: 170px 90px;
+    background-size: 200px;
+  }
+}
+
+@media (max-width: 320px) {
+  .pokemon__header {
+    background-position: 93px 46px;
+    background-size: 100px;
+    background-position: 170px 90px;
+    background-size: 200px;
+  }
+}
