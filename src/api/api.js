@@ -97,7 +97,7 @@ export async function getPokemonSpeciesData(speciesName) {
     : null;
   const species = speciesData.genera.find((data) => data.language.name === "en").genus;
   const color = speciesData.color ? speciesData.color.name : null;
-  const habitat = speciesData.habitat ? speciesData.habitat.name : "unknown";
+  const habitat = speciesData.habitat ? speciesData.habitat.name.replace(/-/g, " ") : "unknown";
   const description = speciesData.flavor_text_entries.find((data) => data.language.name === "en").flavor_text;
   const evolutionChainUrl = speciesData.evolution_chain ? speciesData.evolution_chain.url : null;
 
