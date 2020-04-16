@@ -1,16 +1,24 @@
-import axios from "axios";
+// FETCH WRAPPER
+
+async function apiFetch(apiUrl) {
+  const response = await fetch(apiUrl);
+  if (response.ok) {
+    return response.json();
+  } else {
+    throw new Error(`Catching Pokemons was unsuccessful :( (${response.status})`);
+  }
+}
 
 // CATCH ALL POKEMONS, NO MATTER TYPE
 
 async function catchAll({ limit, offset }) {
   const pokeApi = "https://pokeapi.co/api/v2/pokemon";
   const pokeApiCall = `${pokeApi}?limit=${limit}&offset=${offset}`;
-  const pokemonList = await axios.get(pokeApiCall).then((response) => {
-    return {
-      pokemons: response.data.results,
-      count: response.data.count,
-    };
-  });
+  const response = await apiFetch(pokeApiCall);
+  const pokemonList = {
+    pokemons: response.results,
+    count: response.count,
+  };
   const promises = pokemonList.pokemons.map((pokemon) => catchPokemonData(pokemon.name));
   const pokemons = await Promise.all(promises);
   const count = pokemonList.count;
@@ -21,9 +29,8 @@ async function catchAll({ limit, offset }) {
 // CATCH ALL POKEMONS, WITH PARTICULAR TYPE
 
 async function catchWithType({ limit, offset, type }) {
-  const pokemonList = await axios
-    .get(`https://pokeapi.co/api/v2/type/${type}`)
-    .then((response) => response.data.pokemon);
+  const response = await apiFetch(`https://pokeapi.co/api/v2/type/${type}`);
+  const pokemonList = response.pokemon;
 
   const promises = pokemonList
     .slice(offset, offset + limit)
@@ -47,7 +54,7 @@ export async function gottaCatchThemAll({ limit, offset, type }) {
 // FIND ALL POKEMON DATA - USING ITS NAME
 
 function fetchPokemonData(pokemonName) {
-  return axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`).then((response) => response.data);
+  return apiFetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
 }
 
 // GET POKEMON'S PICTURES
@@ -73,7 +80,8 @@ async function fetchPokemonPicture(pokemonName) {
 
 export async function getPokemonTypes() {
   const pokeApiTypeCall = "https://pokeapi.co/api/v2/type";
-  const typeList = await axios.get(pokeApiTypeCall).then((response) => response.data.results);
+  const response = await apiFetch(pokeApiTypeCall);
+  const typeList = response.results;
   const types = typeList.map((type) => type.name);
 
   return types;
@@ -82,9 +90,7 @@ export async function getPokemonTypes() {
 // GET POKEMON'S SPECIES DATA BY USING ITS NAME  AND PREPARE IT FOR LATER USE
 
 export async function getPokemonSpeciesData(speciesName) {
-  const speciesData = await axios
-    .get(`https://pokeapi.co/api/v2/pokemon-species/${speciesName}`)
-    .then((response) => response.data);
+  const speciesData = await apiFetch(`https://pokeapi.co/api/v2/pokemon-species/${speciesName}`);
 
   const generation = speciesData.generation
     ? speciesData.generation.name.replace(/generation-/i, "").toUpperCase()
@@ -124,7 +130,8 @@ export async function catchPokemonData(pokemonName) {
 // GET EVOLUTION CHAIN DATA
 
 export async function getEvolutionChain(evolutionChainUrl) {
-  const evolutionData = await axios.get(evolutionChainUrl).then((response) => response.data.chain);
+  const response = await apiFetch(evolutionChainUrl);
+  const evolutionData = response.chain;
   const evolutions = {};
 
   const first = evolutionData.species.name;
@@ -151,7 +158,8 @@ export async function getEvolutionChain(evolutionChainUrl) {
   }
 
   for (let pokemonName in evolutions) {
-    evolutions[pokemonName].pictures = await fetchPokemonPicture(pokemonName);
+    const pokemonPictures = await fetchPokemonPicture(pokemonName);
+    evolutions[pokemonName].pictures = pokemonPictures;
   }
 
   return evolutions;
