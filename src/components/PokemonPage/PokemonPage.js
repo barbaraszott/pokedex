@@ -3,6 +3,7 @@ import { useParams, useHistory } from "react-router-dom";
 
 import getPokemonColor from "../../tools/pokemonColor";
 import Pokemon from "../Pokemon/Pokemon";
+import Spinner from "../Spinner/Spinner";
 import { catchPokemonData } from "../../api/api";
 
 import "./PokemonPage.scss";
@@ -31,7 +32,7 @@ function PokemonPage() {
       <button className="back-arrow" onClick={() => history.goBack()}>
         ←
       </button>
-      {pokemonData ? <Pokemon {...pokemonData} pokemonColor={pokemonColor} /> : "Loading"}
+      {pokemonData ? <Pokemon {...pokemonData} pokemonColor={pokemonColor} /> : <Spinner />}
     </section>
   );
 }
