@@ -88,7 +88,7 @@ function PokemonList(props) {
           ))}
       </section>
 
-      {!isLoading && !error && pokemonList.length && (
+      {!isLoading && !error && pokemonList.length > 0 && (
         <Pagination
           currentPageIndex={Number(page)}
           count={pokemonCount}
