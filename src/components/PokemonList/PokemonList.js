@@ -70,9 +70,9 @@ function PokemonList(props) {
         <Filter onTypeSearch={onTypeSearch} currentType={type} typesList={typesList} />
       </section>
       <section className="pokemon-list" id="pokemons">
-        {isLoading && <Spinner />}
-        {!isLoading && error && <span>{error.message}</span>}
-        {!isLoading && !error && pokemonList.length === 0 && <span>No pokemons :(</span>}
+        {isLoading && <Spinner data-testid="spinner" />}
+        {!isLoading && error && <span data-testid="error">{error.message}</span>}
+        {!isLoading && !error && pokemonList.length === 0 && <span data-testid="no-pokemons">No pokemons :(</span>}
         {!isLoading &&
           !error &&
           pokemonList.length > 0 &&
@@ -88,7 +88,7 @@ function PokemonList(props) {
           ))}
       </section>
 
-      {!isLoading && !error && (
+      {!isLoading && !error && pokemonList.length && (
         <Pagination
           currentPageIndex={Number(page)}
           count={pokemonCount}
